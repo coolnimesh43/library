@@ -1,6 +1,8 @@
 
 package com.lftechnology.library.resource;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -39,5 +41,12 @@ public class UserResource {
     public User get(@PathParam("id") String userId) {
         logger.debug("Inside UserResource#get method. User id is: {}", userId);
         return this.userDAO.findById(Long.valueOf(userId));
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> getAll() {
+        logger.debug("Inside UserResource#getAll method.");
+        return this.userDAO.findAll();
     }
 }
