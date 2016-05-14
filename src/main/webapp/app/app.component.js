@@ -15,6 +15,7 @@ var about_component_1 = require("./about/about.component");
 var nav_component_1 = require("./nav/nav.component");
 var welcome_component_1 = require("./welcome/welcome.component");
 var footer_component_1 = require("./footer/footer.component");
+var video_component_1 = require("./video/video.component");
 var AppComponent = (function () {
     function AppComponent(_router) {
         this._router = _router;
@@ -28,7 +29,8 @@ var AppComponent = (function () {
         }),
         router_1.RouteConfig([
             { path: '/home', name: "Welcome", component: welcome_component_1.WelcomeComponent, useAsDefault: true },
-            { path: '/about', name: "About", component: about_component_1.AboutComponent }
+            { path: '/about', name: "About", component: about_component_1.AboutComponent },
+            { path: '/video', name: "Video", component: video_component_1.VideoComponent }
         ]), 
         __metadata('design:paramtypes', [router_1.Router])
     ], AppComponent);

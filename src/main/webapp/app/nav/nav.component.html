@@ -13,10 +13,7 @@
                        (click)="onSelect('about')">About</a>
                 </li>
                 <li>
-                    <a href="blog.html" [class.active]="selected==='blog'" (click)="onSelect('blog')">Blog</a>
-                </li>
-                <li>
-                    <a href="shows.html" [class.active]="selected==='shows'" (click)="onSelect('shows')">Shows</a>
+                    <a [routerLink]="['Video']" [class.active]="selected==='video'" (click)="onSelect('video')">Video</a>
                 </li>
             </ul>
         </div>

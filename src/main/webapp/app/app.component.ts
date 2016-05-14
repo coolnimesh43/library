@@ -5,6 +5,7 @@ import {AboutComponent} from "./about/about.component";
 import {NavigationComponent} from "./nav/nav.component";
 import {WelcomeComponent} from "./welcome/welcome.component";
 import {FooterComponent} from "./footer/footer.component";
+import {VideoComponent} from "./video/video.component";
 @Component({
     selector:'my-app',
     templateUrl:'./app/app.component.html',
@@ -13,7 +14,8 @@ import {FooterComponent} from "./footer/footer.component";
 })
 @RouteConfig([
     {path:'/home',name:"Welcome",component: WelcomeComponent, useAsDefault:true},
-    {path:'/about',name:"About", component:AboutComponent}
+    {path:'/about',name:"About", component:AboutComponent},
+    {path:'/video',name:"Video",component:VideoComponent}
 ])
 export class AppComponent{
     constructor(private _router:Router){}
