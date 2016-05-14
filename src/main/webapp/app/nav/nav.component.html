@@ -1,22 +1,24 @@
-<div id="header">
-    <div class="header">
-        <ul>
-            <li>
-                <a [routerLink]="['/home']" [class.selected]="selected==='home'" (click)="onSelect('home')">home</a>
-            </li>
-            <li>
-                <a [routerLink]="['/about']" [class.selected]="selected==='about'" (click)="onSelect('about')">about</a>
-            </li>
-            <li>
-                <a href="blog.html" [class.selected]="selected==='blog'" (click)="onSelect('blog')">blog</a>
-            </li>
-            <li>
-                <a href="shows.html" [class.selected]="selected==='shows'" (click)="onSelect('shows')">shows</a>
-            </li>
-        </ul>
-        <form action="index.html">
-            <input type="text" name="email" id="email" value="Enter e-mail address">
-            <input type="submit" name="submit" id="submit" value="">
-        </form>
+<nav class="navbar navbar-inverse ">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a [routerLink]="['Welcome']" class="navbar-brand" (click)="onSelect('home')">Your Music</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a [routerLink]="['Welcome']" [class.active]="selected==='home'" (click)="onSelect('home')">Home</a>
+                </li>
+                <li>
+                    <a [routerLink]="['About']" [class.active]="selected==='about'"
+                       (click)="onSelect('about')">About</a>
+                </li>
+                <li>
+                    <a href="blog.html" [class.active]="selected==='blog'" (click)="onSelect('blog')">Blog</a>
+                </li>
+                <li>
+                    <a href="shows.html" [class.active]="selected==='shows'" (click)="onSelect('shows')">Shows</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
+</nav>

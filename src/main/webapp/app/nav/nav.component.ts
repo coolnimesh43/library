@@ -1,7 +1,7 @@
-import {Component,OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import {Component,OnInit} from 'angular2/core';
+import {ROUTER_DIRECTIVES} from 'angular2/router';
 @Component({
-    selector:'nav',
+    selector:'navigation',
     templateUrl:'./app/nav/nav.component.html',
     directives:[ROUTER_DIRECTIVES]
 })

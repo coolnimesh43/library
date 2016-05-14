@@ -32,6 +32,9 @@ public class Video extends AbstractEntity {
     @Column(name = "active", nullable = false)
     private Boolean active = Boolean.TRUE;
 
+    @Column(name = "shared", nullable = false)
+    private Boolean shared = Boolean.TRUE;
+
     public Video() {
     }
 
@@ -43,6 +46,7 @@ public class Video extends AbstractEntity {
         this.duration = builder.duration;
         this.active = builder.active;
         this.name = builder.name;
+        this.shared = builder.shared;
     }
 
     public String getUrl() {
@@ -101,10 +105,18 @@ public class Video extends AbstractEntity {
         this.active = active;
     }
 
+    public Boolean getShared() {
+        return shared;
+    }
+
+    public void setShared(Boolean shared) {
+        this.shared = shared;
+    }
+
     @Override
     public String toString() {
         return "Video [url=" + url + ", videoId=" + videoId + ", frameHeight=" + frameHeight + ", frameWidth=" + frameWidth +
-            ", duration=" + duration + ", name=" + name + ", active=" + active + ", getId()=" + getId() + "]";
+            ", duration=" + duration + ", name=" + name + ", active=" + active + ", getId()=" + getId() + ", shared" + shared + "]";
     }
 
     public static class VideoBuilder {
@@ -116,6 +128,7 @@ public class Video extends AbstractEntity {
         private Float duration;
         private String name;
         private Boolean active = Boolean.TRUE;
+        private Boolean shared = Boolean.TRUE;
 
         public VideoBuilder(String url, String videoId, Boolean active) {
             super();
@@ -141,6 +154,11 @@ public class Video extends AbstractEntity {
 
         public VideoBuilder name(String name) {
             this.name = name;
+            return this;
+        }
+
+        public VideoBuilder shared(Boolean shared) {
+            this.shared = shared;
             return this;
         }
 

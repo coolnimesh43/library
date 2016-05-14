@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
+var core_1 = require('angular2/core');
+var router_1 = require('angular2/router');
 var NavigationComponent = (function () {
     function NavigationComponent() {
     }
@@ -23,7 +23,7 @@ var NavigationComponent = (function () {
     };
     NavigationComponent = __decorate([
         core_1.Component({
-            selector: 'nav',
+            selector: 'navigation',
             templateUrl: './app/nav/nav.component.html',
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
