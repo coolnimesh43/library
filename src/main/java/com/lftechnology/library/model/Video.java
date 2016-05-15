@@ -14,7 +14,7 @@ public class Video extends AbstractEntity {
     @Column(name = "url", nullable = false, unique = true)
     private String url;
 
-    @Column(name = "video_id", nullable = false)
+    @Column(name = "video_id")
     private String videoId;
 
     @Column(name = "frame_height")

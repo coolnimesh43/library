@@ -48,6 +48,8 @@ public class VideoResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Video save(@Valid Video video) {
         logger.debug("Inside VideoResource#save method. Video to be saved is: {}", video);
+        video.setCreatedBy(1L);
+        video.setLastModifiedBy(1L);
         return this.videoDAO.save(video);
     }
 }
