@@ -10,22 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("angular2/core");
 var http_1 = require("angular2/http");
+var Observable_1 = require("rxjs/Observable");
 require('rxjs/Rx');
 var VideoService = (function () {
     function VideoService(_http) {
         this._http = _http;
-        this.addUrl = 'http://localhost:8080/library/api/video';
+        this.videoUrl = 'http://localhost:8080/library/api/video';
     }
     VideoService.prototype.add = function (video) {
-        var _this = this;
         var headers = new http_1.Headers();
         headers.append("Content-Type", "application/json");
-        return this._http.post(this.addUrl, JSON.stringify(video), { headers: headers }).map(function (response) { return response.json(); })
+        return this._http.post(this.videoUrl, JSON.stringify(video), { headers: headers }).map(function (response) { return response.json(); })
             .do()
-            .catch(function (error) { return _this.handleError(error); });
+            .catch(this.handleError);
+    };
+    VideoService.prototype.getAll = function () {
+        return this._http.get(this.videoUrl).map(function (response) { return response.json(); })
+            .do()
+            .catch(this.handleError);
     };
     VideoService.prototype.handleError = function (error) {
         console.log(error);
+        return Observable_1.Observable.throw(error.json().error || 'server error');
     };
     VideoService = __decorate([
         core_1.Injectable(), 

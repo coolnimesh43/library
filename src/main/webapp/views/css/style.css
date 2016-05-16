@@ -26,3 +26,15 @@ figcaption{
 	font-weight:500;
 	font-size:24px;
 }
+.pre-scrollable{
+	max-height: 600px !important;
+}
+.background-black{
+	background-color: #464646;
+	padding:10px;
+}
+.video-title{
+	font-size: 14px;
+	font-weight:400;
+	padding:5px;
+}

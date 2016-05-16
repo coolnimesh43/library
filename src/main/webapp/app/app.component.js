@@ -15,8 +15,10 @@ var about_component_1 = require("./about/about.component");
 var nav_component_1 = require("./nav/nav.component");
 var welcome_component_1 = require("./welcome/welcome.component");
 var footer_component_1 = require("./footer/footer.component");
-var video_component_1 = require("./video/video.component");
+var video_add_component_1 = require("./video/video-add.component");
 var VideoService_1 = require("./service/VideoService");
+var videos_component_1 = require("./video/videos.component");
+var YoutubeVideoService_1 = require("./service/YoutubeVideoService");
 var AppComponent = (function () {
     function AppComponent(_router) {
         this._router = _router;
@@ -26,12 +28,12 @@ var AppComponent = (function () {
             selector: 'my-app',
             templateUrl: './app/app.component.html',
             directives: [router_1.ROUTER_DIRECTIVES, nav_component_1.NavigationComponent, footer_component_1.FooterComponent],
-            providers: [router_1.ROUTER_PROVIDERS, http_1.HTTP_PROVIDERS, VideoService_1.VideoService]
+            providers: [router_1.ROUTER_PROVIDERS, http_1.HTTP_PROVIDERS, VideoService_1.VideoService, videos_component_1.VideosComponent, YoutubeVideoService_1.YoutubeVideoService]
         }),
         router_1.RouteConfig([
             { path: '/home', name: "Welcome", component: welcome_component_1.WelcomeComponent, useAsDefault: true },
             { path: '/about', name: "About", component: about_component_1.AboutComponent },
-            { path: '/video', name: "Video", component: video_component_1.VideoComponent }
+            { path: '/video', name: "Video", component: video_add_component_1.VideoAddComponent }
         ]), 
         __metadata('design:paramtypes', [router_1.Router])
     ], AppComponent);

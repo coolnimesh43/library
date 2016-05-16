@@ -16,20 +16,24 @@ public class VideoServiceImpl implements VideoDAO {
     @Inject
     private EntityManager entityManager;
 
+    @Override
     public List<Video> findAll() {
-        return this.entityManager.createQuery("Select v from Video v where v.active=1?", Video.class).setParameter(1, true).getResultList();
+        return this.entityManager.createQuery("Select v from Video v where v.active=?1", Video.class).setParameter(1, true).getResultList();
     }
 
+    @Override
     public Video findById(Long id) {
         return this.entityManager.find(Video.class, id);
     }
 
+    @Override
     public Video save(Video object) {
         this.entityManager.persist(object);
         this.entityManager.flush();
         return object;
     }
 
+    @Override
     public void delete(Long id) {
         this.entityManager.remove(this.findById(id));
     }

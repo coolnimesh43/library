@@ -1,7 +1,9 @@
 
 package com.lftechnology.library.resource;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -30,8 +32,9 @@ public class VideoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Video> getAll() {
-        logger.debug("Inside VideoResource#getAll method.");
-        return this.videoDAO.findAll();
+        List<Video> videos = this.videoDAO.findAll();
+        Comparator<Video> dateComparator = (Video v1, Video v2) -> v2.getCreatedDate().compareTo(v1.getCreatedDate());
+        return videos.stream().sorted(dateComparator).collect(Collectors.toList());
     }
 
     @GET

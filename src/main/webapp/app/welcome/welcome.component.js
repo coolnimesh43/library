@@ -10,13 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var router_1 = require('angular2/router');
+var videos_component_1 = require("../video/videos.component");
 var WelcomeComponent = (function () {
     function WelcomeComponent() {
     }
     WelcomeComponent = __decorate([
         core_1.Component({
             templateUrl: './app/welcome/welcome.component.html',
-            directives: [router_1.ROUTER_DIRECTIVES]
+            directives: [router_1.ROUTER_DIRECTIVES, videos_component_1.VideosComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], WelcomeComponent);

@@ -1,8 +1,10 @@
 
 package com.lftechnology.library.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +26,7 @@ public class Video extends AbstractEntity {
     private Integer frameWidth;
 
     @Column(name = "duration")
-    private Float duration;
+    private String duration;
 
     @Column(name = "name")
     private String name;
@@ -34,6 +36,15 @@ public class Video extends AbstractEntity {
 
     @Column(name = "shared", nullable = false)
     private Boolean shared = Boolean.TRUE;
+
+    @Column(name = "description")
+    private String description;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Image image;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Statistics statistics;
 
     public Video() {
     }
@@ -47,6 +58,9 @@ public class Video extends AbstractEntity {
         this.active = builder.active;
         this.name = builder.name;
         this.shared = builder.shared;
+        this.image = builder.image;
+        this.description = builder.description;
+        this.statistics = builder.statistics;
     }
 
     public String getUrl() {
@@ -81,11 +95,11 @@ public class Video extends AbstractEntity {
         this.frameWidth = frameWidth;
     }
 
-    public Float getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Float duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -113,6 +127,30 @@ public class Video extends AbstractEntity {
         this.shared = shared;
     }
 
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
+    }
+
     @Override
     public String toString() {
         return "Video [url=" + url + ", videoId=" + videoId + ", frameHeight=" + frameHeight + ", frameWidth=" + frameWidth +
@@ -125,10 +163,13 @@ public class Video extends AbstractEntity {
         private String videoId;
         private Integer frameHeight;
         private Integer frameWidth;
-        private Float duration;
+        private String duration;
         private String name;
         private Boolean active = Boolean.TRUE;
         private Boolean shared = Boolean.TRUE;
+        private Image image;
+        private String description;
+        private Statistics statistics;
 
         public VideoBuilder(String url, String videoId, Boolean active) {
             super();
@@ -147,7 +188,7 @@ public class Video extends AbstractEntity {
             return this;
         }
 
-        public VideoBuilder duration(Float duration) {
+        public VideoBuilder duration(String duration) {
             this.duration = duration;
             return this;
         }
@@ -159,6 +200,21 @@ public class Video extends AbstractEntity {
 
         public VideoBuilder shared(Boolean shared) {
             this.shared = shared;
+            return this;
+        }
+
+        public VideoBuilder image(Image image) {
+            this.image = image;
+            return this;
+        }
+
+        public VideoBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public VideoBuilder statistics(Statistics statistics) {
+            this.statistics = statistics;
             return this;
         }
 
