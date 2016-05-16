@@ -25,7 +25,6 @@ var VideosComponent = (function () {
                 _this.currentVideo = _this.videos[0];
             }
         }, function (error) { return _this.errorMessage = error; });
-        console.log(this.videos);
     };
     VideosComponent.prototype.playVideo = function (video) {
         if (video !== undefined) {

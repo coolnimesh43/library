@@ -11,14 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('angular2/core');
 var router_1 = require('angular2/router');
 var NavigationComponent = (function () {
-    function NavigationComponent() {
+    function NavigationComponent(_router) {
+        this._router = _router;
+        this.router = _router;
     }
     NavigationComponent.prototype.onSelect = function (tab) {
         this.selected = tab;
     };
     NavigationComponent.prototype.ngOnInit = function () {
+        var _this = this;
         if (this.selected === undefined) {
-            this.selected = 'home';
+            this.router.subscribe(function (currentUrl) { return _this.selected = currentUrl; }, function (error) { return console.error(error); });
         }
     };
     NavigationComponent = __decorate([
@@ -27,7 +30,7 @@ var NavigationComponent = (function () {
             templateUrl: './app/nav/nav.component.html',
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.Router])
     ], NavigationComponent);
     return NavigationComponent;
 }());

@@ -10,13 +10,13 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <strong>{{successMessage}}</strong>
+        <strong class="text-center">{{successMessage}}</strong>
     </div>
     <div class="alert alert-danger alert-dismissible fade in col-md-4" role="alert" *ngIf="errorMessage">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <strong>{{errorMessage}}</strong>
+        <strong class="text-center">{{errorMessage}}</strong>
     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -24,14 +24,6 @@
                 <div class="form-group ">
                     <label for="video-url">Video Url</label>
                     <textarea id="video-url" class="form-control" required placeholder="Enter video url here..." [(ngModel)]="video.url"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="video-name">Video Name</label>
-                    <input id="video-name" class="form-control" placeholder="Enter the name of video here..." [(ngModel)]="video.name">
-                </div>
-                <div class="form-group ">
-                    <label for="video-duration">Video Duration</label>
-                    <input type="text" class="form-control" id="video-duration" placeholder="Enter the video duration here..." [(ngModel)]="video.duration">
                 </div>
                 <div class="checkbox">
                     <label>

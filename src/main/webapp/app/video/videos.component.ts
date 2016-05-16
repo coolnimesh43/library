@@ -22,7 +22,6 @@ export class VideosComponent implements OnInit{
                 this.currentVideo=this.videos[0];
             }
         }, error => this.errorMessage=<any>error);
-        console.log(this.videos);
     }
 
     playVideo(video:Video):void{

@@ -10,7 +10,7 @@ import {YoutubeResponse, Snippet, Item, Statistics} from "../entity/YoutubeRespo
     directives: [ROUTER_DIRECTIVES]
 })
 export class VideoAddComponent {
-    private youtubeEmbedUrl:string="https://www.youtube.com/embed/";
+    private youtubeEmbedUrl:string = "https://www.youtube.com/embed/";
     video:Video;
     errorMessage:string;
     successMessage:string;
@@ -22,38 +22,30 @@ export class VideoAddComponent {
     add():void {
         if (this.validateVideo()) {
             this.extractVideoContent();
-            console.log(this.video);
             let addVideo;
             this._youtubeVideoService.getVideoContent(this.video.videoId).subscribe(response => {
-                    let youtubeResponse:YoutubeResponse = response;
-                    if (youtubeResponse.pageInfo.totalResults > 0) {
-                        let item:Item = youtubeResponse.items[0];
-                        let snippet:Snippet = item.snippet;
-                        this.video.name = snippet.title;
-                        this.video.description = snippet.description;
-                        this.video.image = snippet.thumbnails.medium;
-                        this.video.duration = item.contentDetails.duration;
-                        let stats=item.statistics;
-                        this.video.statistics=new Statistics();
-                        this.video.statistics.likeCount = stats.likeCount;
-                        this.video.statistics.dislikeCount=stats.dislikeCount;
-                        this.video.statistics.viewCount=stats.viewCount;
-                        addVideo=this._videoService.add(this.video);
-                        console.log(this.video);
-                    }
-
-                }, error => {
-                    this.errorMessage = <any>error
-                }, function saveVideo() {
-                    addVideo.subscribe(savedVideo => {
+                let youtubeResponse:YoutubeResponse = response;
+                if (youtubeResponse.pageInfo.totalResults > 0) {
+                    let item:Item = youtubeResponse.items[0];
+                    let snippet:Snippet = item.snippet;
+                    this.video.name = snippet.title;
+                    this.video.description = snippet.description;
+                    this.video.image = snippet.thumbnails.medium;
+                    this.video.duration = item.contentDetails.duration;
+                    let stats = item.statistics;
+                    this.video.statistics = new Statistics();
+                    this.video.statistics.likeCount = stats.likeCount;
+                    this.video.statistics.dislikeCount = stats.dislikeCount;
+                    this.video.statistics.viewCount = stats.viewCount;
+                    addVideo = this._videoService.add(this.video).subscribe(savedVideo => {
                         this.successMessage = 'Video added successfully.';
                         this.video = new Video();
                     }, error =>this.errorMessage = <any> error);
-                });
-            // this._videoService.add(this.video).subscribe(savedVideo => {
-            //     this.successMessage = 'Video added successfully.';
-            //     this.video = new Video();
-            // }, error =>this.errorMessage = <any> error);
+                }
+
+            }, error => {
+                this.errorMessage = <any>error;
+             });
         }
     }
 
@@ -93,7 +85,7 @@ export class VideoAddComponent {
         let urlParts = sharedUrl.split('youtu.be/');
         if (urlParts.length) {
             this.video.videoId = urlParts[urlParts.length - 1];
-            this.video.url=this.youtubeEmbedUrl+this.video.videoId;
+            this.video.url = this.youtubeEmbedUrl + this.video.videoId;
         }
     }
 }

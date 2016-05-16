@@ -26,7 +26,6 @@ var VideoAddComponent = (function () {
         var _this = this;
         if (this.validateVideo()) {
             this.extractVideoContent();
-            console.log(this.video);
             var addVideo_1;
             this._youtubeVideoService.getVideoContent(this.video.videoId).subscribe(function (response) {
                 var youtubeResponse = response;
@@ -42,17 +41,13 @@ var VideoAddComponent = (function () {
                     _this.video.statistics.likeCount = stats.likeCount;
                     _this.video.statistics.dislikeCount = stats.dislikeCount;
                     _this.video.statistics.viewCount = stats.viewCount;
-                    addVideo_1 = _this._videoService.add(_this.video);
-                    console.log(_this.video);
+                    addVideo_1 = _this._videoService.add(_this.video).subscribe(function (savedVideo) {
+                        _this.successMessage = 'Video added successfully.';
+                        _this.video = new Video_1.Video();
+                    }, function (error) { return _this.errorMessage = error; });
                 }
             }, function (error) {
                 _this.errorMessage = error;
-            }, function saveVideo() {
-                var _this = this;
-                addVideo_1.subscribe(function (savedVideo) {
-                    _this.successMessage = 'Video added successfully.';
-                    _this.video = new Video_1.Video();
-                }, function (error) { return _this.errorMessage = error; });
             });
         }
     };

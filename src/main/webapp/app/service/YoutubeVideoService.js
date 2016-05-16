@@ -24,7 +24,6 @@ var YoutubeVideoService = (function () {
             .catch(this.handleError);
     };
     YoutubeVideoService.prototype.handleError = function (error) {
-        console.log(error);
         return Observable_1.Observable.throw(error.json().error || 'server error');
     };
     YoutubeVideoService = __decorate([

@@ -16,7 +16,6 @@ export class YoutubeVideoService{
             .catch(this.handleError);
     }
     private handleError(error:Response){
-        console.log(error);
         return Observable.throw(error.json().error || 'server error');
     }
 }
