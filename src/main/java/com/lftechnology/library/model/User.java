@@ -11,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -139,16 +137,6 @@ public class User extends AbstractEntity {
 
     public void setFavouriteVideos(List<Video> favouriteVideos) {
         this.favouriteVideos = favouriteVideos;
-    }
-
-    @PrePersist
-    public void setCreatedDate() {
-        this.setCreatedDate(new Date());
-    }
-
-    @PreUpdate
-    public void setUpdatedDate() {
-        this.setLastModifiedDate(new Date());
     }
 
     public static class UserBuilder {
