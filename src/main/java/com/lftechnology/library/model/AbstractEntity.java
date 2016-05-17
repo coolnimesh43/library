@@ -2,7 +2,6 @@
 package com.lftechnology.library.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -13,6 +12,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.joda.time.DateTime;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.lftechnology.library.util.LocalDateTimeSerializer;
 
 @MappedSuperclass
 public class AbstractEntity implements Serializable {
@@ -32,11 +36,13 @@ public class AbstractEntity implements Serializable {
 
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private DateTime createdDate;
 
     @Column(name = "last_modified_last")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private DateTime lastModifiedDate;
 
     public Long getId() {
         return id;
@@ -62,33 +68,33 @@ public class AbstractEntity implements Serializable {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public Date getCreatedDate() {
+    public DateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(DateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public DateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(DateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     @PrePersist
     public void prePersist() {
         this.setCreatedBy(1L);
         this.setLastModifiedBy(1L);
-        this.setCreatedDate(new Date());
+        this.setCreatedDate(new DateTime());
     }
 
     @PreUpdate
     public void preUpdate() {
         this.setLastModifiedBy(1L);
-        this.setLastModifiedDate(new Date());
+        this.setLastModifiedDate(new DateTime());
     }
 
 }
