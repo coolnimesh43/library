@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -18,9 +19,12 @@ import javax.ws.rs.core.MediaType;
 import org.apache.logging.log4j.Logger;
 
 import com.lftechnology.library.dao.VideoDAO;
+import com.lftechnology.library.model.User;
 import com.lftechnology.library.model.Video;
+import com.lftechnology.library.producer.AuthenticatedUser;
 
 @Path("video")
+@Stateless
 public class VideoResource {
 
     @Inject
@@ -28,6 +32,10 @@ public class VideoResource {
 
     @Inject
     private Logger logger;
+
+    @Inject
+    @AuthenticatedUser
+    private User authenticatedUser;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
