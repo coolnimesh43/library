@@ -64,4 +64,10 @@ public class UserTokenServiceImpl implements UserTokenDAO {
             1, refreshToken).getSingleResult();
     }
 
+    @Override
+    public UserToken findByAccessToken(String accessToken) {
+        return (UserToken) this.entityManager.createQuery("Select uToken from UserToken uToken where uToken.accessToken=?1").setParameter(
+            1, accessToken).getSingleResult();
+    }
+
 }

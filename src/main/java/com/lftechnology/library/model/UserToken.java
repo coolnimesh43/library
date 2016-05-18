@@ -14,9 +14,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "user_token")
 public class UserToken extends AbstractEntity {
 
-    @Column(name = "refresh_token", unique = true)
+    @Column(name = "refresh_token", unique = true, columnDefinition = "TEXT")
     @NotNull
     private String refreshToken;
+
+    @Column(name = "access_token", unique = true, columnDefinition = "TEXT")
+    @NotNull
+    private String accessToken;
 
     @NotNull
     @ManyToOne
@@ -30,8 +34,9 @@ public class UserToken extends AbstractEntity {
         super();
     }
 
-    public UserToken(String refreshToken, User user, LocalDateTime localDateTime) {
+    public UserToken(String refreshToken, User user, LocalDateTime localDateTime, String accessToken) {
         super();
+        this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.user = user;
         this.expiresAt = localDateTime;
@@ -67,10 +72,18 @@ public class UserToken extends AbstractEntity {
         this.expiresAt = expiresAt;
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
     @Override
     public String toString() {
-
-        return "UserToken [refreshToken=" + refreshToken + ", user=" + user + ", getId()=" + getId() + "]";
+        return "UserToken [refreshToken=" + refreshToken + ", accessToken=" + accessToken + ", user=" + user + ", expiresAt=" + expiresAt +
+            ", getId()=" + getId() + "]";
     }
 
 }

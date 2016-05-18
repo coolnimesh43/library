@@ -9,16 +9,20 @@ public class ConfigurationProperties {
 
     private static ConfigurationProperties configurationProperties;
     private String salt;
+    private String appSecretKey;
+    private String tokenIssuer;
 
-    private String configFile = "/config.properties";
+    private final String CONFIG_FILE = "/config.properties";
     private Properties properties;
 
-    public ConfigurationProperties() {
-        InputStream inputStream = getClass().getResourceAsStream(configFile);
+    private ConfigurationProperties() {
+        InputStream inputStream = getClass().getResourceAsStream(CONFIG_FILE);
         properties = new Properties();
         try {
             properties.load(inputStream);
-            this.setSalt(properties.getProperty("HASH-SALT"));
+            this.setSalt(properties.getProperty("HASH_SALT"));
+            this.setAppSecretKey(properties.getProperty("APP_SECRET_KEY"));
+            this.setTokenIssuer(properties.getProperty("TOKEN_ISSUER"));
         }
         catch (IOException e) {
             throw new RuntimeException();
@@ -38,6 +42,22 @@ public class ConfigurationProperties {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getAppSecretKey() {
+        return appSecretKey;
+    }
+
+    public void setAppSecretKey(String appSecretKey) {
+        this.appSecretKey = appSecretKey;
+    }
+
+    public String getTokenIssuer() {
+        return tokenIssuer;
+    }
+
+    public void setTokenIssuer(String tokenIssuer) {
+        this.tokenIssuer = tokenIssuer;
     }
 
 }

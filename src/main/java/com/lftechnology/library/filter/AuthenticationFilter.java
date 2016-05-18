@@ -2,6 +2,7 @@
 package com.lftechnology.library.filter;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.annotation.Priority;
 import javax.enterprise.event.Event;
@@ -15,8 +16,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
+import com.auth0.jwt.internal.org.apache.commons.codec.binary.Base64;
+import com.lftechnology.library.model.User;
 import com.lftechnology.library.producer.AuthenticatedUser;
 import com.lftechnology.library.producer.Secured;
+import com.lftechnology.library.service.AuthenticationService;
+import com.lftechnology.library.util.WebTokenUtils;
 
 @Secured
 @Provider
@@ -25,7 +30,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     @Inject
     @AuthenticatedUser
-    private Event<String> userAuthenticationEvent;
+    private Event<User> userAuthenticationEvent;
+
+    @Inject
+    private AuthenticationService authenticationService;
 
     @Override
     public void filter(ContainerRequestContext requestContext)
@@ -36,11 +44,14 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
         String token = authorizationToken.substring("Bearer".length()).trim();
         try {
-            // validateToken(token);
-            // userAuthenticationEvent.fire(userName);
+            Map<String, Object> payload = this.authenticationService.validateToken(token);
+            String userEncodedString = payload.get(WebTokenUtils.SUB).toString();
+            String userString = new String(Base64.decodeBase64(userEncodedString));
+            User user = this.authenticationService.getUserFromToken(userString);
+            userAuthenticationEvent.fire(user);
         }
         catch (Exception e) {
-            requestContext.abortWith(Response.status(Status.UNAUTHORIZED).build());
+            requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(e).build());
         }
 
     }

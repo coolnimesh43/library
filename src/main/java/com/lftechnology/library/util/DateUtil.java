@@ -1,21 +1,28 @@
 
 package com.lftechnology.library.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import org.joda.time.DateTime;
 
 public class DateUtil {
 
-    public static final DateFormat SQL_DATE_FORMAT_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
+    private final static String SQL_DATE_PATTERN = "yyyy-MM-dd HH:mm";
 
-    public static String formatDateToSqlDateString(DateTime date) {
-        return SQL_DATE_FORMAT_WITHOUT_TIME.format(date.toDate());
+    public static String formatDateToSqlDateString(LocalDateTime localDateTime) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(SQL_DATE_PATTERN);
+        return localDateTime.format(dateTimeFormatter);
     }
 
     public static String getCurrentDateWithTimeStamp() {
         return new DateTime().toString();
     }
 
+    public static LocalDateTime getLocalDateTimeFromMilliSeconds(long milliSeconds) {
+        Instant instant = Instant.ofEpochMilli(milliSeconds);
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+    }
 }

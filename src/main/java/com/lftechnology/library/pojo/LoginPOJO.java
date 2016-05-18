@@ -5,14 +5,12 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class LoginPOJO implements Serializable {
 
     @NotNull
     private String email;
 
-    @JsonIgnore
+    @NotNull
     private String password;
 
     public String getEmail() {
@@ -29,6 +27,11 @@ public class LoginPOJO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginPOJO [email=" + email + ", password=" + password + "]";
     }
 
 }

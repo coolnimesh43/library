@@ -15,6 +15,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.Logger;
 
+import com.auth0.jwt.internal.org.apache.commons.codec.digest.DigestUtils;
+import com.lftechnology.library.config.ConfigurationProperties;
 import com.lftechnology.library.dao.UserDAO;
 import com.lftechnology.library.model.User;
 
@@ -27,11 +29,16 @@ public class UserResource {
     @Inject
     private transient Logger logger;
 
+    private String salt = ConfigurationProperties.instance().getSalt();
+
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @POST
     public User save(@Valid User user) {
         logger.debug("Inside UserResource save method. User to be saved is: {}", user);
+        String password = user.getPassword();
+        String encryptedPassword = DigestUtils.shaHex((salt + password).getBytes());
+        user.setPassword(encryptedPassword);
         return this.userDAO.save(user);
     }
 

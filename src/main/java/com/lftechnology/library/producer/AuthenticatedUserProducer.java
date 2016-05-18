@@ -15,7 +15,7 @@ public class AuthenticatedUserProducer {
     @AuthenticatedUser
     private User authenticatedUser;
 
-    public void handleAuthenticationEvent(@Observes @AuthenticatedUser String userName) {
-        // this.authenticatedUser=findUserByUserName(userName);
+    public void handleAuthenticationEvent(@Observes @AuthenticatedUser User user) {
+        this.authenticatedUser = user;
     }
 }

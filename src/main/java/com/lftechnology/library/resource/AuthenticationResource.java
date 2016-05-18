@@ -1,36 +1,44 @@
 
 package com.lftechnology.library.resource;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.logging.log4j.Logger;
 
-@Path("authentication")
+import com.lftechnology.library.pojo.LoginPOJO;
+import com.lftechnology.library.pojo.Token;
+import com.lftechnology.library.service.AuthenticationService;
+
+@Path("auth")
+@Stateless
 public class AuthenticationResource {
 
     @Inject
     private Logger logger;
 
+    @Inject
+    private AuthenticationService authenticationService;
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response authenticateUser(@FormParam("userName") String userName, @FormParam("password") String password) {
-        logger.debug("Inside AuthenticationResource#authenticateUser method. userName is: {} and password is: {}", userName, password);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response authenticateUser(LoginPOJO loginPojo) {
+        logger.debug("Inside AuthenticationResource#authenticateUser method. login pojo is: {}", loginPojo);
         try {
-            // authenticate(userName,password);
-            // String token=issueToken(userName);
-            // return Response.ok(token).build();
+            Token token = this.authenticationService.authenticate(loginPojo);
+            return Response.ok(token).build();
         }
         catch (Exception e) {
-            // return Response.status(Status.UNAUTHORIZED).build();
+            logger.error("Inside AuthenticationResource#authenticateUser method. Excpetion is: {}", e);
+            return Response.status(Status.UNAUTHORIZED).build();
         }
-        return Response.ok().build();
     }
 }

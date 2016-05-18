@@ -15,12 +15,13 @@ import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 import com.auth0.jwt.internal.org.apache.commons.codec.binary.Base64;
+import com.lftechnology.library.config.ConfigurationProperties;
 import com.lftechnology.library.exception.TokenExpiredExcpetion;
 import com.lftechnology.library.exception.TokenExtractionException;
 
 public class WebTokenUtils {
 
-    private static final String APP_SECRET_KEY = "library";
+    private static final String APP_SECRET_KEY = ConfigurationProperties.instance().getAppSecretKey();
     private static final String AUDIENCE = "1";
 
     public static final String ISS = "iss";
@@ -29,7 +30,7 @@ public class WebTokenUtils {
     public static final String EXP = "exp";
     public static final String IAT = "iat";
 
-    private static final String ISSUER = "coolnimesh43@gmail.com";
+    private static final String ISSUER = ConfigurationProperties.instance().getTokenIssuer();
 
     public static Map<String, Object> makePayload(String userString, Integer expiryTime) {
 
