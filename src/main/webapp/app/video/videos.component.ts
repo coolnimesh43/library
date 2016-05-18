@@ -1,7 +1,6 @@
 import {Video} from "../entity/Video";
 import {Component, OnInit, Output} from "angular2/core";
 import {VideoService} from "../service/VideoService";
-import EventEmitter = webdriver.EventEmitter;
 import {DurationFilter} from "../filter/duration.filter";
 @Component({
     selector:'videos',

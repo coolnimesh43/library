@@ -8,10 +8,10 @@ import com.lftechnology.library.model.User;
 
 public class Token implements Serializable {
 
-    @JsonProperty("access_token")
+    @JsonProperty("accessToken")
     private String accessToken;
 
-    @JsonProperty("refresh_token")
+    @JsonProperty("refreshToken")
     private String refreshtoken;
 
     @JsonProperty("user")

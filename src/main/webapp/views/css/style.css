@@ -1,40 +1,126 @@
 body {
-	background: #000 url(../images/background.jpg) no-repeat top center;
+    background: #000 url(../images/background.jpg) no-repeat top center;
 }
-.active{
-	background-color:#CCCCCC !important;
-	color:#000000 !important;
+
+.active {
+    background-color: #CCCCCC !important;
+    color: #000000 !important;
 }
-.welcome{
-	color:#CCCCCC;
-	font-size:18px;
+
+.welcome {
+    color: #fff;
+    font-size: 18px;
+    margin-top:20px;
 }
-div{
-	color:white;
+
+div {
+    color: white;
 }
-figcaption{
-	font-weight:bold;
+
+figcaption {
+    font-weight: bold;
 }
-.mr-top{
-	margin-top:20px;
+
+.mr-top {
+    margin-top: 20px;
 }
-.well{
-	padding: 10px 0 0 15px !important;
+
+.well {
+    padding: 10px 0 0 15px !important;
 }
-.well p{
-	color:black;
-	font-weight:500;
-	font-size:24px;
+
+.well p {
+    color: black;
+    font-weight: 500;
+    font-size: 24px;
 }
-.pre-scrollable{
-	max-height: 600px !important;
+
+.pre-scrollable {
+    max-height: 600px !important;
 }
-.background-black{
-	background-color: #464646;
-	padding:10px;
+
+.background-black {
+    background-color: #464646;
+    padding: 10px;
 }
-.video-title{
-	font-size: 14px;
-	font-weight:400;
-	padding:5px;
+
+.video-title {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading, .form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.account-wall {
+    margin-top: 20px;
+    padding: 40px 0px 20px 0px;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.login-title {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    display: block;
+}
+
+.profile-img {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.need-help {
+    margin-top: 10px;
+}
+
+.new-account {
+    display: block;
+    margin-top: 10px;
 }

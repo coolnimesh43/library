@@ -16,6 +16,11 @@
                     <a [routerLink]="['Video']" [class.active]="selected==='video'" (click)="onSelect('video')">Video</a>
                 </li>
             </ul>
+            <ul class="nav navbar-collapse pull-right">
+                <li class="pull-right">
+                    <a [routerLink]="['Login']" href="#" title="Join Us" (click)="login()"><strong>Join Us</strong></a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
