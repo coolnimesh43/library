@@ -16,6 +16,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
+import org.apache.logging.log4j.Logger;
+
 import com.auth0.jwt.internal.org.apache.commons.codec.binary.Base64;
 import com.lftechnology.library.model.User;
 import com.lftechnology.library.producer.AuthenticatedUser;
@@ -33,11 +35,15 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private Event<User> userAuthenticationEvent;
 
     @Inject
+    private Logger logger;
+
+    @Inject
     private AuthenticationService authenticationService;
 
     @Override
     public void filter(ContainerRequestContext requestContext)
         throws IOException {
+        logger.debug("Header is: {}", requestContext.getHeaderString(HttpHeaders.AUTHORIZATION));
         String authorizationToken = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
         if (authorizationToken == null || !authorizationToken.startsWith("Bearer")) {
             throw new NotAuthorizedException("Authorization header must be provided.");

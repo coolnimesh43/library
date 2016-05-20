@@ -19,12 +19,12 @@ var LoginComponent = (function () {
         this._router = _router;
         this.errorMessageDefault = "Authentication failed for provided username or/and password. Please try again.";
         if (login_service_2.isLoggedIn()) {
-            this._router.navigate(["Home"]);
+            this._router.navigateByUrl('/home');
         }
     }
     LoginComponent.prototype.ngOnInit = function () {
         if (login_service_2.isLoggedIn()) {
-            this._router.navigate(["Home"]);
+            this._router.navigateByUrl('/home');
         }
     };
     LoginComponent.prototype.signIn = function () {
@@ -32,13 +32,12 @@ var LoginComponent = (function () {
         var loginPojo = new Login_1.Login();
         loginPojo.email = this.email;
         loginPojo.password = this.password;
-        this._loginService.login(loginPojo).subscribe(function (ok) { return _this._router.navigate(["Home"]); }, function (error) { return _this.errorMessage = _this.errorMessageDefault; });
-    };
-    LoginComponent.prototype.logout = function () {
+        this._loginService.login(loginPojo).subscribe(function (ok) { return _this._router.navigateByUrl('/home'); }, function (error) { return _this.errorMessage = _this.errorMessageDefault; });
     };
     LoginComponent = __decorate([
         core_1.Component({
-            templateUrl: './app/login/login.component.html'
+            templateUrl: './app/login/login.component.html',
+            directives: [router_1.ROUTER_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [login_service_1.LoginService, router_1.Router])
     ], LoginComponent);

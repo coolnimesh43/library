@@ -14,13 +14,13 @@ export class VideosComponent implements OnInit{
     constructor(private _videoService:VideoService){}
 
     ngOnInit():void{
-        this._videoService.getAll().subscribe(videos => {
-            this.videos=videos;
-            if(this.videos){
-                this.currentVideo=new Video();
-                this.currentVideo=this.videos[0];
-            }
-        }, error => this.errorMessage=<any>error);
+        // this._videoService.getAll().subscribe(videos => {
+        //     this.videos=videos;
+        //     if(this.videos){
+        //         this.currentVideo=new Video();
+        //         this.currentVideo=this.videos[0];
+        //     }
+        // }, error => this.errorMessage=<any>error);
     }
 
     playVideo(video:Video):void{

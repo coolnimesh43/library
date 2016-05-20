@@ -16,11 +16,7 @@
                     <a [routerLink]="['Video']" [class.active]="selected==='video'" (click)="onSelect('video')">Video</a>
                 </li>
             </ul>
-            <ul class="nav navbar-collapse pull-right" *ngIf="getLoggedIn">
-                <li class="pull-right">
-                    <a [routerLink]="['Login']" href="#" title="Join Us" (click)="logout()"><strong>Logout</strong></a>
-                </li>
-            </ul>
+            <logout></logout>
         </div>
     </div>
 </nav>

@@ -3,6 +3,7 @@ import {Http, Response, Headers} from "angular2/http";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/Rx';
 import {Video} from "../entity/Video";
+import {AuthConfig} from "angular2-jwt/angular2-jwt";
 @Injectable()
 export class VideoService{
 
@@ -25,6 +26,12 @@ export class VideoService{
     }
     private handleError(error:Response){
         console.log(error);
+        let auth=new AuthConfig({
+            tokenName: 'accessToken',
+            noJwtError:true,
+            tokenGetter:localStorage.getItem("accessToken")
+        });
+        console.log(auth.getConfig())
         return Observable.throw(error.json().error || 'server error');
     }
 }

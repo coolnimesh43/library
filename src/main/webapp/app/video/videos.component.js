@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var Video_1 = require("../entity/Video");
 var core_1 = require("angular2/core");
 var VideoService_1 = require("./VideoService");
 var duration_filter_1 = require("../filter/duration.filter");
@@ -17,14 +16,13 @@ var VideosComponent = (function () {
         this._videoService = _videoService;
     }
     VideosComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this._videoService.getAll().subscribe(function (videos) {
-            _this.videos = videos;
-            if (_this.videos) {
-                _this.currentVideo = new Video_1.Video();
-                _this.currentVideo = _this.videos[0];
-            }
-        }, function (error) { return _this.errorMessage = error; });
+        // this._videoService.getAll().subscribe(videos => {
+        //     this.videos=videos;
+        //     if(this.videos){
+        //         this.currentVideo=new Video();
+        //         this.currentVideo=this.videos[0];
+        //     }
+        // }, error => this.errorMessage=<any>error);
     };
     VideosComponent.prototype.playVideo = function (video) {
         if (video !== undefined) {

@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.logging.log4j.Logger;
 
+import com.lftechnology.library.exception.InvalidAccessTokenException;
 import com.lftechnology.library.pojo.LoginPOJO;
 import com.lftechnology.library.pojo.Token;
 import com.lftechnology.library.service.AuthenticationService;
@@ -30,6 +31,7 @@ public class AuthenticationResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("login")
     public Response authenticateUser(LoginPOJO loginPojo) {
         logger.debug("Inside AuthenticationResource#authenticateUser method. login pojo is: {}", loginPojo);
         try {
@@ -38,6 +40,26 @@ public class AuthenticationResource {
         }
         catch (Exception e) {
             logger.error("Inside AuthenticationResource#authenticateUser method. Excpetion is: {}", e);
+            return Response.status(Status.UNAUTHORIZED).build();
+        }
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("logout")
+    public Response logout(Token token) {
+        logger.debug("Inside AuthenticationResource#authenticateUser method.Token is: {}", token);
+        try {
+            this.authenticationService.logout(token);
+            return Response.ok().build();
+        }
+        catch (InvalidAccessTokenException e) {
+            logger.error("Inside AuthentiationResource#logout method. Exception is: {}", e);
+            return Response.status(Status.UNAUTHORIZED).build();
+        }
+        catch (Exception e) {
+            logger.error("Inside AuthentiationResource#logout method. Exception is: {}", e);
             return Response.status(Status.UNAUTHORIZED).build();
         }
     }

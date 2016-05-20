@@ -1,11 +1,12 @@
 import {Component,OnInit} from 'angular2/core';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {isLoggedIn} from "../login/login.service";
+import {LogoutComponent} from "../login/logout.component";
 
 @Component({
     selector:'navigation',
     templateUrl:'./app/nav/nav.component.html',
-    directives:[ROUTER_DIRECTIVES]
+    directives:[ROUTER_DIRECTIVES,LogoutComponent]
 })
 export class NavigationComponent implements OnInit{
     selected:string;
@@ -26,4 +27,5 @@ export class NavigationComponent implements OnInit{
    get getLoggedIn():boolean{
         return this.isLoggedIn;
     }
+
 }

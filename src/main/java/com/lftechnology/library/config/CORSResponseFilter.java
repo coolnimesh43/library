@@ -4,11 +4,15 @@ package com.lftechnology.library.config;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
+
+import org.apache.logging.log4j.Logger;
 
 @Provider
 public class CORSResponseFilter implements ContainerResponseFilter {
@@ -17,9 +21,13 @@ public class CORSResponseFilter implements ContainerResponseFilter {
     public final static int MAX_AGE = 42 * 60 * 60;
     public final static String DEFAULT_ALLOWED_HEADERS = "origin,accept,content-type";
 
+    @Inject
+    private Logger logger;
+
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
         throws IOException {
+        logger.debug("headeer: {} Request: {}", requestContext.getHeaderString(HttpHeaders.AUTHORIZATION), requestContext);
         final MultivaluedMap<String, Object> headers = responseContext.getHeaders();
         headers.add("Access-Control-Allow-Origin", "*");
         headers.add("Access-Control-Allow-Headers", getRequestedHeaders(requestContext));

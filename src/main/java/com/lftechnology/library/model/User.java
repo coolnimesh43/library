@@ -1,19 +1,22 @@
 
 package com.lftechnology.library.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.lftechnology.library.util.LocalDateAttributeConverter;
+import com.lftechnology.library.util.LocalDateTimeSerializer;
 
 @Entity
 @Table(name = "library_user")
@@ -41,8 +44,9 @@ public class User extends AbstractEntity {
     private Boolean active = Boolean.TRUE;
 
     @Column(name = "last_logged_in")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastLoggedInDate;
+    @Convert(converter = LocalDateAttributeConverter.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime lastLoggedInDate;
 
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
     @JoinTable(name = "user_video", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id"), }, inverseJoinColumns = {
@@ -123,11 +127,11 @@ public class User extends AbstractEntity {
         this.active = active;
     }
 
-    public Date getLastLoggedInDate() {
+    public LocalDateTime getLastLoggedInDate() {
         return lastLoggedInDate;
     }
 
-    public void setLastLoggedInDate(Date lastLoggedInDate) {
+    public void setLastLoggedInDate(LocalDateTime lastLoggedInDate) {
         this.lastLoggedInDate = lastLoggedInDate;
     }
 
@@ -148,7 +152,7 @@ public class User extends AbstractEntity {
         private String lastName;
         private String address;
         private Boolean active = Boolean.TRUE;
-        private Date lastLoggedInDate;
+        private LocalDateTime lastLoggedInDate;
         private Long createdBy;
         private Long lastModifiedBy;
         private List<Video> favouriteVideos;
@@ -180,7 +184,7 @@ public class User extends AbstractEntity {
             return this;
         }
 
-        public UserBuilder lastLoggedInDate(Date lastLoggedInDate) {
+        public UserBuilder lastLoggedInDate(LocalDateTime lastLoggedInDate) {
             this.lastLoggedInDate = lastLoggedInDate;
             return this;
         }

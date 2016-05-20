@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('angular2/core');
 var router_1 = require('angular2/router');
 var login_service_1 = require("../login/login.service");
+var logout_component_1 = require("../login/logout.component");
 var NavigationComponent = (function () {
     function NavigationComponent(_router) {
         this._router = _router;
@@ -35,7 +36,7 @@ var NavigationComponent = (function () {
         core_1.Component({
             selector: 'navigation',
             templateUrl: './app/nav/nav.component.html',
-            directives: [router_1.ROUTER_DIRECTIVES]
+            directives: [router_1.ROUTER_DIRECTIVES, logout_component_1.LogoutComponent]
         }), 
         __metadata('design:paramtypes', [router_1.Router])
     ], NavigationComponent);

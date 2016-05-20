@@ -12,6 +12,7 @@ var core_1 = require("angular2/core");
 var http_1 = require("angular2/http");
 var Observable_1 = require("rxjs/Observable");
 require('rxjs/Rx');
+var angular2_jwt_1 = require("angular2-jwt/angular2-jwt");
 var VideoService = (function () {
     function VideoService(_http) {
         this._http = _http;
@@ -31,6 +32,12 @@ var VideoService = (function () {
     };
     VideoService.prototype.handleError = function (error) {
         console.log(error);
+        var auth = new angular2_jwt_1.AuthConfig({
+            tokenName: 'accessToken',
+            noJwtError: true,
+            tokenGetter: localStorage.getItem("accessToken")
+        });
+        console.log(auth.getConfig());
         return Observable_1.Observable.throw(error.json().error || 'server error');
     };
     VideoService = __decorate([

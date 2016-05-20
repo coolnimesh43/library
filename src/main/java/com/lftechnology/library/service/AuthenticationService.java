@@ -97,4 +97,15 @@ public interface AuthenticationService {
      */
     User getUserFromToken(String token)
         throws TokenExpiredExcpetion, TokenExtractionException, JsonParseException, JsonMappingException, IOException;
+
+    /**
+     * Method to logout the user by the token. This method removes the user
+     * token from the database for the given token.
+     * 
+     * @author nimesh
+     * @param token
+     *            {@link Token} The token presented by the client.
+     */
+    void logout(Token token)
+        throws InvalidAccessTokenException;
 }

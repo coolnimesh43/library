@@ -59,6 +59,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new InvalidUserNameOrPasswordException();
         }
         Token token = this.generateToken(user);
+        user.setLastLoggedInDate(LocalDateTime.now());
+        this.userDao.save(user);
         return token;
     }
 
@@ -135,6 +137,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String userString = WebTokenUtils.getUserJson(token);
         ObjectMapper mapper = ObjectMapperFactory.objectMapper();
         return mapper.readValue(userString.getBytes(), User.class);
+    }
+
+    @Override
+    public void logout(Token token)
+        throws InvalidAccessTokenException {
+        UserToken userToken = this.userTokenDao.findByRefreshTokenAndAccessToken(token.getRefreshtoken(), token.getAccessToken());
+        if (userToken != null) {
+            this.userTokenDao.delete(userToken.getId());
+        }
+        else {
+            throw new InvalidAccessTokenException();
+        }
     }
 
 }
