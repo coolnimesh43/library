@@ -1,6 +1,6 @@
 import {Video} from "../entity/Video";
 import {Component, OnInit, Output} from "angular2/core";
-import {VideoService} from "../service/VideoService";
+import {VideoService} from "./VideoService";
 import {DurationFilter} from "../filter/duration.filter";
 @Component({
     selector:'videos',

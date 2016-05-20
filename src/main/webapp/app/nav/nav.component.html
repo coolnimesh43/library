@@ -12,13 +12,13 @@
                     <a [routerLink]="['About']" [class.active]="selected==='about'"
                        (click)="onSelect('about')">About</a>
                 </li>
-                <li>
+                <li *ngIf="getLoggedIn">
                     <a [routerLink]="['Video']" [class.active]="selected==='video'" (click)="onSelect('video')">Video</a>
                 </li>
             </ul>
-            <ul class="nav navbar-collapse pull-right">
+            <ul class="nav navbar-collapse pull-right" *ngIf="getLoggedIn">
                 <li class="pull-right">
-                    <a [routerLink]="['Login']" href="#" title="Join Us" (click)="login()"><strong>Join Us</strong></a>
+                    <a [routerLink]="['Login']" href="#" title="Join Us" (click)="logout()"><strong>Logout</strong></a>
                 </li>
             </ul>
         </div>

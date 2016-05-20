@@ -1,5 +1,7 @@
 import {Component,OnInit} from 'angular2/core';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
+import {isLoggedIn} from "../login/login.service";
+
 @Component({
     selector:'navigation',
     templateUrl:'./app/nav/nav.component.html',
@@ -7,18 +9,21 @@ import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 })
 export class NavigationComponent implements OnInit{
     selected:string;
-    router:Router;
+    private isLoggedIn:boolean;
+
     constructor(private _router:Router){
-        this.router=_router;
+        this.isLoggedIn=isLoggedIn();
+    }
+    ngOnInit():void{
+        if(this.selected===undefined){
+            this.selected="Home";
+        }
     }
     onSelect(tab:string):void{
         this.selected=tab;
     }
 
-    ngOnInit():void{
-        if(this.selected===undefined){
-            this.router.subscribe(currentUrl => this.selected=currentUrl,error=>console.error(error));
-        }
+   get getLoggedIn():boolean{
+        return this.isLoggedIn;
     }
-
 }

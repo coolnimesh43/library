@@ -15,17 +15,22 @@ var Observable_1 = require("rxjs/Observable");
 var LoginService = (function () {
     function LoginService(_http) {
         this._http = _http;
+        this.ACCESS_TOKEN = "accessToken";
+        this.REFRESH_TOKEN = "refreshToken";
+        this.USER = "user";
         this.loginUrl = "http://localhost:8080/library/api/auth";
+        this.logoutUrl = "http://localhost:8080/";
     }
     LoginService.prototype.login = function (login) {
+        var _this = this;
         var headers = new http_1.Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
         return this._http.post(this.loginUrl, JSON.stringify(login), { headers: headers }).map(function (response) { return response.json(); })
             .do(function (token) {
-            localStorage.setItem("accessToken", token.accessToken);
-            localStorage.setItem("refreshToken", token.refreshtoken);
-            localStorage.setItem("user", token.user);
+            localStorage.setItem(_this.ACCESS_TOKEN, token.accessToken);
+            localStorage.setItem(_this.REFRESH_TOKEN, token.refreshtoken);
+            localStorage.setItem(_this.USER, token.user.toString());
         })
             .catch(this.handleError);
     };
@@ -39,4 +44,8 @@ var LoginService = (function () {
     return LoginService;
 }());
 exports.LoginService = LoginService;
+function isLoggedIn() {
+    return !!localStorage.getItem(this.ACCESS_TOKEN);
+}
+exports.isLoggedIn = isLoggedIn;
 //# sourceMappingURL=login.service.js.map

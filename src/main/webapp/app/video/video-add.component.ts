@@ -1,10 +1,11 @@
 ///<reference path="../../typings/jquery/jquery.d.ts" />
 import {Component} from "angular2/core";
-import {ROUTER_DIRECTIVES} from "angular2/router";
+import {ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Video} from "../entity/Video";
-import {VideoService} from "../service/VideoService";
-import {YoutubeVideoService} from "../service/YoutubeVideoService";
+import {VideoService} from "./VideoService";
+import {YoutubeVideoService} from "./YoutubeVideoService";
 import {YoutubeResponse, Snippet, Item, Statistics} from "../entity/YoutubeResponse";
+import {isLoggedIn} from "../login/login.service";
 @Component({
     templateUrl: './app/video/video-add.component.html',
     directives: [ROUTER_DIRECTIVES]

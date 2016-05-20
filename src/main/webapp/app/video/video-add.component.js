@@ -12,8 +12,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("angular2/core");
 var router_1 = require("angular2/router");
 var Video_1 = require("../entity/Video");
-var VideoService_1 = require("../service/VideoService");
-var YoutubeVideoService_1 = require("../service/YoutubeVideoService");
+var VideoService_1 = require("./VideoService");
+var YoutubeVideoService_1 = require("./YoutubeVideoService");
 var YoutubeResponse_1 = require("../entity/YoutubeResponse");
 var VideoAddComponent = (function () {
     function VideoAddComponent(_videoService, _youtubeVideoService) {

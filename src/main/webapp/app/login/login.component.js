@@ -11,21 +11,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("angular2/core");
 var login_service_1 = require("./login.service");
 var Login_1 = require("../entity/Login");
+var login_service_2 = require('../login/login.service');
+var router_1 = require("angular2/router");
 var LoginComponent = (function () {
-    function LoginComponent(_loginService) {
+    function LoginComponent(_loginService, _router) {
         this._loginService = _loginService;
+        this._router = _router;
+        this.errorMessageDefault = "Authentication failed for provided username or/and password. Please try again.";
+        if (login_service_2.isLoggedIn()) {
+            this._router.navigate(["Home"]);
+        }
     }
+    LoginComponent.prototype.ngOnInit = function () {
+        if (login_service_2.isLoggedIn()) {
+            this._router.navigate(["Home"]);
+        }
+    };
     LoginComponent.prototype.signIn = function () {
+        var _this = this;
         var loginPojo = new Login_1.Login();
         loginPojo.email = this.email;
         loginPojo.password = this.password;
-        this._loginService.login(loginPojo).subscribe();
+        this._loginService.login(loginPojo).subscribe(function (ok) { return _this._router.navigate(["Home"]); }, function (error) { return _this.errorMessage = _this.errorMessageDefault; });
+    };
+    LoginComponent.prototype.logout = function () {
     };
     LoginComponent = __decorate([
         core_1.Component({
             templateUrl: './app/login/login.component.html'
         }), 
-        __metadata('design:paramtypes', [login_service_1.LoginService])
+        __metadata('design:paramtypes', [login_service_1.LoginService, router_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());

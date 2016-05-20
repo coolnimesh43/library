@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var Video_1 = require("../entity/Video");
 var core_1 = require("angular2/core");
-var VideoService_1 = require("../service/VideoService");
+var VideoService_1 = require("./VideoService");
 var duration_filter_1 = require("../filter/duration.filter");
 var VideosComponent = (function () {
     function VideosComponent(_videoService) {
