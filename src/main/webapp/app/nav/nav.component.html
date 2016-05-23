@@ -15,6 +15,9 @@
                 <li *ngIf="getLoggedIn">
                     <a [routerLink]="['Video']" [class.active]="selected==='video'" (click)="onSelect('video')">Video</a>
                 </li>
+                <li *ngIf="currentUser">
+                    <a [routerLink]="['User']" [class.active]="selected==='user'" (click)="onSelect('user')">User</a>
+                </li>
             </ul>
             <logout></logout>
         </div>

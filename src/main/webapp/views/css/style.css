@@ -133,3 +133,13 @@ figcaption {
 .col-md-4.pre-scrollable.background-black div span{
     margin:5px 0 10px 0;
 }
+table{
+    color: #FFFFFF;
+    border:none;
+}
+tbody{
+    float:none !important;
+}
+td{
+    border:none !important;
+}

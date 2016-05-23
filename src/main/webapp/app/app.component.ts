@@ -16,6 +16,7 @@ import {AuthRouterOutlet} from "./filter/oauth.route.filter";
 import {LocalStorgeService} from "./service/local-storage";
 import {HttpClient} from "./config/http.client";
 import {TokenService} from "./service/token.service";
+import {UserComponent} from "./user/user.component";
 @Component({
     selector: 'my-app',
     templateUrl: './app/app.component.html',
@@ -27,7 +28,8 @@ import {TokenService} from "./service/token.service";
     {path: '/home', name: "Welcome", component: WelcomeComponent},
     {path: '/about', name: "About", component: AboutComponent},
     {path: '/video', name: "Video", component: VideoAddComponent},
-    {path: '/login', name: "Login", component: LoginComponent, useAsDefault: true}
+    {path: '/login', name: "Login", component: LoginComponent, useAsDefault: true},
+    {path:'/user',name:"User",component:UserComponent}
 ])
 export class AppComponent {
     constructor(private _router:Router) {

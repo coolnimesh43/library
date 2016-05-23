@@ -12,14 +12,19 @@ var core_1 = require('angular2/core');
 var router_1 = require('angular2/router');
 var login_service_1 = require("../login/login.service");
 var logout_component_1 = require("../login/logout.component");
+var login_service_2 = require('../login/login.service');
 var NavigationComponent = (function () {
     function NavigationComponent(_router) {
         this._router = _router;
-        this.isLoggedIn = login_service_1.isLoggedIn();
     }
     NavigationComponent.prototype.ngOnInit = function () {
         if (this.selected === undefined) {
             this.selected = "Home";
+        }
+        this.isLoggedIn = login_service_1.isLoggedIn();
+        var user = login_service_2.getLoggedInUser();
+        if (user) {
+            this.loginUser = user.firstName + ' ' + user.lastName;
         }
     };
     NavigationComponent.prototype.onSelect = function (tab) {
@@ -28,6 +33,13 @@ var NavigationComponent = (function () {
     Object.defineProperty(NavigationComponent.prototype, "getLoggedIn", {
         get: function () {
             return this.isLoggedIn;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(NavigationComponent.prototype, "currentUser", {
+        get: function () {
+            return this.loginUser;
         },
         enumerable: true,
         configurable: true

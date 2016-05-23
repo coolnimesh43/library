@@ -26,6 +26,7 @@ var oauth_route_filter_1 = require("./filter/oauth.route.filter");
 var local_storage_1 = require("./service/local-storage");
 var http_client_1 = require("./config/http.client");
 var token_service_1 = require("./service/token.service");
+var user_component_1 = require("./user/user.component");
 var AppComponent = (function () {
     function AppComponent(_router) {
         this._router = _router;
@@ -42,7 +43,8 @@ var AppComponent = (function () {
             { path: '/home', name: "Welcome", component: welcome_component_1.WelcomeComponent },
             { path: '/about', name: "About", component: about_component_1.AboutComponent },
             { path: '/video', name: "Video", component: video_add_component_1.VideoAddComponent },
-            { path: '/login', name: "Login", component: login_component_1.LoginComponent, useAsDefault: true }
+            { path: '/login', name: "Login", component: login_component_1.LoginComponent, useAsDefault: true },
+            { path: '/user', name: "User", component: user_component_1.UserComponent }
         ]), 
         __metadata('design:paramtypes', [router_1.Router])
     ], AppComponent);
