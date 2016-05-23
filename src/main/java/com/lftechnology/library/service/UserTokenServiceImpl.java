@@ -25,21 +25,18 @@ public class UserTokenServiceImpl implements UserTokenDAO {
 
     @Override
     public List<UserToken> findAll() {
-
         logger.debug("Inside UserTokenServiceImpl#findAll method.");
         return this.entityManager.createQuery("Select uToken from UserToken uToken").getResultList();
     }
 
     @Override
     public UserToken findById(Long id) {
-
         logger.debug("Inside UserTokenServiceImpl#findById method. Id is: {}", id);
         return this.entityManager.find(UserToken.class, id);
     }
 
     @Override
     public UserToken save(UserToken object) {
-
         logger.debug("Inside UserTokenServiceImpl#save method. user token is: {}", object);
         try {
             this.entityManager.persist(object);
@@ -53,28 +50,22 @@ public class UserTokenServiceImpl implements UserTokenDAO {
 
     @Override
     public void delete(Long id) {
-
         this.entityManager.remove(this.findById(id));
         this.entityManager.flush();
     }
 
     @Override
-    public UserToken findByRefreshToken(String refreshToken) {
-        return (UserToken) this.entityManager.createQuery("Select uToken from UserToken uToken where uToken.refreshToken=?1").setParameter(
-            1, refreshToken).getSingleResult();
-    }
-
-    @Override
     public UserToken findByAccessToken(String accessToken) {
-        return (UserToken) this.entityManager.createQuery("Select uToken from UserToken uToken where uToken.accessToken=?1").setParameter(
-            1, accessToken).getSingleResult();
-    }
-
-    @Override
-    public UserToken findByRefreshTokenAndAccessToken(String refreshToken, String accessToken) {
-        return (UserToken) this.entityManager.createQuery(
-            "Select uToken from UserToken uToken where uToken.refreshToken=?1 and uToken.accessToken=?2").setParameter(
-                1, refreshToken).setParameter(2, accessToken).getSingleResult();
+        UserToken token = null;
+        try {
+            token =
+                (UserToken) this.entityManager.createQuery("Select uToken from UserToken uToken where uToken.accessToken=?1").setParameter(
+                    1, accessToken).getSingleResult();
+        }
+        catch (Exception e) {
+            logger.error("While finding user token by access token. Exception is: {}", e);
+        }
+        return token;
     }
 
 }

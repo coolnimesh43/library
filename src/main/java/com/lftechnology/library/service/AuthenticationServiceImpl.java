@@ -72,15 +72,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             ObjectMapper mapper = new ObjectMapper();
             String userString = mapper.writeValueAsString(user);
             Map<String, Object> accessPayload = WebTokenUtils.makePayload(userString, TOKEN_EXPIRY_MINUTES);
-            Map<String, Object> refreshPayload = WebTokenUtils.makePayload(userString, TOKEN_DESTROY_MINUTES);
             String accessToken = WebTokenUtils.payLoadToTokenString(accessPayload);
-            String refreshToken = WebTokenUtils.payLoadToTokenString(refreshPayload);
 
-            Token token = new Token(accessToken, refreshToken, user);
-            Long exp = Long.valueOf(refreshPayload.get(WebTokenUtils.EXP).toString());
-            LocalDateTime expiresAt = DateUtil.getLocalDateTimeFromMilliSeconds(exp);
+            Token token = new Token(accessToken, user);
+            Long exp = Long.valueOf(accessPayload.get(WebTokenUtils.EXP).toString());
+            LocalDateTime expiresAt = DateUtil.getLocalDateTimeFromSeconds(exp);
+            logger.debug("expiry date is: {}", expiresAt);
 
-            UserToken userToken = new UserToken(refreshToken, user, expiresAt, accessToken);
+            UserToken userToken = new UserToken(user, expiresAt, accessToken);
+            logger.debug("Saving user token: {}", userToken);
             this.userTokenDao.save(userToken);
             return token;
         }
@@ -91,43 +91,65 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Token refreshAccessToken(String refreshToken)
-        throws TokenExtractionException, JsonProcessingException, RefreshTokenExpiredException {
-        logger.debug("Inside AuthenticationServiceImpl#refreshAccessToken method. Refresh token is: {}", refreshToken);
-        UserToken userToken = this.userTokenDao.findByRefreshToken(refreshToken);
-        if (userToken == null) {
-            throw new TokenExtractionException();
-        }
-        LocalDateTime now = LocalDateTime.now();
-        if (userToken.getExpiresAt().isAfter(now)) {
-            User user = userToken.getUser();
-            ObjectMapper mapper = new ObjectMapper();
-            String userJson = mapper.writeValueAsString(user);
-            Map<String, Object> accessPayload = WebTokenUtils.makePayload(userJson, TOKEN_EXPIRY_MINUTES);
-            String accessToken = WebTokenUtils.payLoadToTokenString(accessPayload);
-            userToken.setAccessToken(accessToken);
-            this.userTokenDao.save(userToken);
-            Token token = new Token(accessToken, refreshToken, user);
-            return token;
-        }
-        else {
-            this.userTokenDao.delete(userToken.getId());
-            throw new RefreshTokenExpiredException();
-        }
+        throws JsonProcessingException, RefreshTokenExpiredException, InvalidAccessTokenException {
+        return null;
+        // logger.debug("Inside AuthenticationServiceImpl#refreshAccessToken
+        // method. Refresh token is: {}", refreshToken);
+        // UserToken userToken =
+        // this.userTokenDao.findByRefreshToken(refreshToken);
+        // if (userToken == null) {
+        // throw new InvalidAccessTokenException();
+        // }
+        // LocalDateTime now = LocalDateTime.now();
+        // if (userToken.getExpiresAt().isAfter(now)) {
+        // User user = userToken.getUser();
+        // ObjectMapper mapper = new ObjectMapper();
+        // String userJson = mapper.writeValueAsString(user);
+        // Map<String, Object> accessPayload =
+        // WebTokenUtils.makePayload(userJson, TOKEN_EXPIRY_MINUTES);
+        // String accessToken =
+        // WebTokenUtils.payLoadToTokenString(accessPayload);
+        // userToken.setAccessToken(accessToken);
+        // this.userTokenDao.save(userToken);
+        // Token token = new Token(accessToken, refreshToken, user);
+        // return token;
+        // }
+        // else {
+        // this.userTokenDao.delete(userToken.getId());
+        // throw new RefreshTokenExpiredException();
+        // }
     }
 
     @Override
-    public Map<String, Object> validateToken(String accessToken)
-        throws TokenExpiredExcpetion, TokenExtractionException, InvalidAccessTokenException, RefreshTokenExpiredException {
-        Map<String, Object> payload = WebTokenUtils.verifyToken(accessToken);
-        UserToken userToken = this.userTokenDao.findByAccessToken(accessToken);
-        if (userToken == null) {
-            throw new InvalidAccessTokenException();
+    public Map<String, Object> validateToken(String accessToken) {
+        logger.debug("Validating token: {}", accessToken);
+        Map<String, Object> payload = null;
+        try {
+            payload = WebTokenUtils.verifyToken(accessToken);
+            Long exp = Long.valueOf(payload.get(WebTokenUtils.EXP).toString());
+            LocalDateTime localDateTime = DateUtil.getLocalDateTimeFromSeconds(exp);
+            UserToken userToken = this.userTokenDao.findByAccessToken(accessToken);
+            if (userToken == null) {
+                try {
+                    throw new InvalidAccessTokenException();
+                }
+                catch (InvalidAccessTokenException e) {
+                    return null;
+                }
+            }
+            if (LocalDateTime.now().isAfter(localDateTime)) {
+                try {
+                    throw new RefreshTokenExpiredException();
+                }
+                catch (RefreshTokenExpiredException e) {
+                    return null;
+                }
+            }
         }
-        Long exp = Long.valueOf(payload.get(WebTokenUtils.EXP).toString());
-        LocalDateTime localDateTime = DateUtil.getLocalDateTimeFromMilliSeconds(exp);
-        if (LocalDateTime.now().isAfter(localDateTime)) {
-            throw new RefreshTokenExpiredException();
+        catch (TokenExpiredExcpetion | TokenExtractionException e) {
+            return null;
         }
+
         return payload;
     }
 
@@ -140,9 +162,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public void logout(Token token)
         throws InvalidAccessTokenException {
-        UserToken userToken = this.userTokenDao.findByRefreshTokenAndAccessToken(token.getRefreshtoken(), token.getAccessToken());
+        UserToken userToken = this.userTokenDao.findByAccessToken(token.getAccessToken());
         if (userToken != null) {
             this.userTokenDao.delete(userToken.getId());
         }

@@ -1,61 +1,61 @@
 
 package com.lftechnology.library.pojo;
 
+import java.io.IOException;
 import java.io.Serializable;
 
-import com.auth0.jwt.internal.com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.lftechnology.library.model.User;
+import com.lftechnology.library.util.ObjectMapperFactory;
 
 public class Token implements Serializable {
 
-    @JsonProperty("accessToken")
+    @NotNull
     private String accessToken;
 
-    @JsonProperty("refreshToken")
-    private String refreshtoken;
-
-    @JsonProperty("user")
+    @NotNull
     private User user;
 
     public Token() {
         super();
     }
 
-    public Token(String accessToken, String refreshtoken, User user) {
+    public Token(String token)
+        throws JsonParseException, JsonMappingException, IOException {
+        System.out.println(token);
+        Token object = ObjectMapperFactory.objectMapper().readValue(token, Token.class);
+        this.accessToken = object.accessToken;
+        this.user = object.user;
+    }
+
+    public Token(String accessToken, User user) {
         super();
         this.accessToken = accessToken;
-        this.refreshtoken = refreshtoken;
         this.user = user;
     }
 
     public String getAccessToken() {
-
         return accessToken;
     }
 
     public void setAccessToken(String accessToken) {
-
         this.accessToken = accessToken;
     }
 
-    public String getRefreshtoken() {
-
-        return refreshtoken;
-    }
-
-    public void setRefreshtoken(String refreshtoken) {
-
-        this.refreshtoken = refreshtoken;
-    }
-
     public User getUser() {
-
         return user;
     }
 
     public void setUser(User user) {
-
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Token [accessToken=" + accessToken + ", user=" + user + "]";
     }
 
 }

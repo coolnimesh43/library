@@ -18,6 +18,16 @@ var LocalStorgeService = (function () {
     LocalStorgeService.prototype.setToLocalStorage = function (key, value) {
         localStorage.setItem(key, value);
     };
+    LocalStorgeService.prototype.setAllToLocalStorge = function (token) {
+        this.setToLocalStorage("token", JSON.stringify(token));
+        this.setToLocalStorage("user", JSON.stringify(token.user));
+        this.setToLocalStorage("accessToken", JSON.stringify(token.accessToken));
+    };
+    LocalStorgeService.prototype.removeAllFromLocalStorage = function () {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        localStorage.removeItem("accessToken");
+    };
     LocalStorgeService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

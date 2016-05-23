@@ -25,6 +25,7 @@ var login_service_1 = require("./login/login.service");
 var oauth_route_filter_1 = require("./filter/oauth.route.filter");
 var local_storage_1 = require("./service/local-storage");
 var http_client_1 = require("./config/http.client");
+var token_service_1 = require("./service/token.service");
 var AppComponent = (function () {
     function AppComponent(_router) {
         this._router = _router;
@@ -35,7 +36,7 @@ var AppComponent = (function () {
             templateUrl: './app/app.component.html',
             directives: [router_1.ROUTER_DIRECTIVES, nav_component_1.NavigationComponent, footer_component_1.FooterComponent, oauth_route_filter_1.AuthRouterOutlet],
             providers: [router_1.ROUTER_PROVIDERS, http_1.HTTP_PROVIDERS, VideoService_1.VideoService, videos_component_1.VideosComponent, YoutubeVideoService_1.YoutubeVideoService, angular2_jwt_1.AuthHttp, login_service_1.LoginService,
-                local_storage_1.LocalStorgeService, http_client_1.HttpClient]
+                local_storage_1.LocalStorgeService, http_client_1.HttpClient, token_service_1.TokenService]
         }),
         router_1.RouteConfig([
             { path: '/home', name: "Welcome", component: welcome_component_1.WelcomeComponent },

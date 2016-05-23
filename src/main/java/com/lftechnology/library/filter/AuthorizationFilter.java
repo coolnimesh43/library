@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Priority;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
@@ -26,9 +23,9 @@ import com.lftechnology.library.model.UserRole;
 import com.lftechnology.library.producer.AuthenticatedUser;
 import com.lftechnology.library.producer.Secured;
 
-@RequestScoped
-@Secured
-@Priority(Priorities.AUTHORIZATION)
+//@RequestScoped
+// @Secured
+// @Priority(Priorities.AUTHORIZATION)
 public class AuthorizationFilter implements ContainerRequestFilter {
 
     @Context

@@ -25,4 +25,14 @@ public class DateUtil {
         Instant instant = Instant.ofEpochMilli(milliSeconds);
         return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
     }
+
+    public static LocalDateTime getLocalDateTimeFromSeconds(long seconds) {
+        Instant instant = Instant.ofEpochSecond(seconds);
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+    }
+
+    public static void main(String[] args) {
+        System.out.println(
+            DateUtil.getLocalDateTimeFromSeconds(LocalDateTime.now().plusMinutes(10).atZone(ZoneId.systemDefault()).toEpochSecond()));
+    }
 }

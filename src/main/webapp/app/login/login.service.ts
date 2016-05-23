@@ -5,9 +5,10 @@ import {Login} from "../entity/Login";
 import {Observable} from "rxjs/Observable";
 import {Token} from "../entity/Token";
 import any = jasmine.any;
-import {AuthHttp} from "angular2-jwt/angular2-jwt";
 import {User} from "../entity/User";
 import {HttpClient} from "../config/http.client";
+import {LocalStorgeService} from "../service/local-storage";
+import {TokenService} from "../service/token.service";
 
 @Injectable()
 export class LoginService {
@@ -19,55 +20,45 @@ export class LoginService {
     private loginUrl:string = "http://localhost:8080/library/api/auth/login";
     private logOutUrl:string = "http://localhost:8080/library/api/auth/logout";
 
-    constructor(private _http:Http, private _httpClient:HttpClient) {
+    constructor(private _http:Http, private _httpClient:HttpClient, private _localStorageService:LocalStorgeService) {
     }
 
     login(login:Login):Observable<Token> {
-        let headers:Headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-
-        return this._http.post(this.loginUrl, JSON.stringify(login), {headers: headers}).map((response:Response)=><Token> response.json())
-            .do(token => {
-                localStorage.setItem(this.TOKEN,JSON.stringify(token));
-                localStorage.setItem(this.ACCESS_TOKEN, token.accessToken);
-                localStorage.setItem(this.REFRESH_TOKEN, token.refreshtoken);
-                localStorage.setItem(this.USER, JSON.stringify(token.user));
-            })
-            .catch(this.handleError);
+        if(this._localStorageService.getFromLocalStorage("token")===null){
+            let headers:Headers=this._httpClient.setHeader();
+            return this._http.post(this.loginUrl, JSON.stringify(login),{headers:headers}).map((response:Response) => <Token> response.json())
+                .do(data => this._localStorageService.setAllToLocalStorge(data));
+        }
     }
 
-    public logout():Observable<string> {
+    public logout():void {
         if (isLoggedIn()) {
             let token:Token = localStorage.getItem(this.TOKEN);
-            return this._httpClient.post(this.logOutUrl, JSON.stringify(token)).map((response:Response) => response.json())
-                .do(data=>{
-                    localStorage.removeItem(this.ACCESS_TOKEN);
-                    localStorage.removeItem(this.TOKEN);
-                    localStorage.removeItem(this.REFRESH_TOKEN);
-                    localStorage.removeItem(this.USER);
-                })
-                .catch(this.handleError);
+            this._localStorageService.removeAllFromLocalStorage();
+            let headers:Headers=this._httpClient.setHeader();
+            this._http.post(this.logOutUrl, JSON.stringify(token),{headers:headers})
+                .map((response:Response) => {console.log(response.json() +" text is "+response.text());return response.json();})
+                .do( data => console.log(data))
+                .catch(data => {console.log(data); return Observable.throw(data ||'error')})
+                .subscribe();
         }
 
     }
 
     private  handleError(error:Response):Observable<any> {
-        console.log(error.json());
-        throw Observable.throw(error.json() || 'Validation failed.');
+     return Observable.throw(error || "validation failed");
     }
 
 }
-
-export function isLoggedIn() {
-    let value = !!localStorage.getItem("accessToken") && !!localStorage.getItem("refreshToken");
-    return value;
-}
-
-export function getLoggedInUser():User{
-    let user:User;
-    if(isLoggedIn()){
-        user=localStorage.getItem("user");
+    export function isLoggedIn() {
+        let value = !!localStorage.getItem("accessToken") && !!localStorage.getItem("token");
+        return value;
     }
-    return user;
-}
+
+    export function getLoggedInUser():User {
+        let user:User;
+        if (isLoggedIn()) {
+            user = localStorage.getItem("user");
+        }
+        return user;
+    }

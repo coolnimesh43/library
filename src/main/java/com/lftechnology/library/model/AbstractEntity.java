@@ -13,9 +13,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lftechnology.library.util.LocalDateAttributeConverter;
-import com.lftechnology.library.util.LocalDateTimeSerializer;
 
 @MappedSuperclass
 public class AbstractEntity implements Serializable {
@@ -28,19 +27,25 @@ public class AbstractEntity implements Serializable {
     private Long id;
 
     @Column(name = "created_by", nullable = false)
+    @JsonIgnore
     private Long createdBy;
 
     @Column(name = "last_modified_by", nullable = false)
+    @JsonIgnore
     private Long lastModifiedBy;
 
     @Column(name = "created_date")
+    @JsonIgnore
     @Convert(converter = LocalDateAttributeConverter.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    // @JsonSerialize(using = LocalDateTimeSerializer.class)
+    // @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdDate;
 
     @Column(name = "last_modified_last")
     @Convert(converter = LocalDateAttributeConverter.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    // @JsonSerialize(using = LocalDateTimeSerializer.class)
+    // @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonIgnore
     private LocalDateTime lastModifiedDate;
 
     public Long getId() {

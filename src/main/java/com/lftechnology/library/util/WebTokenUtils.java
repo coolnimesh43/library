@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -53,13 +52,11 @@ public class WebTokenUtils {
 
     public static Map<String, Object> verifyToken(String token)
         throws TokenExpiredExcpetion, TokenExtractionException {
-
         try {
             Map<String, Object> payload = new JWTVerifier(APP_SECRET_KEY, AUDIENCE).verify(token);
             Long exp = Long.valueOf(payload.get(EXP).toString());
-            Instant instant = Instant.ofEpochMilli(exp);
-            LocalDateTime expiry = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-            if (expiry.isAfter(LocalDateTime.now())) {
+            LocalDateTime expiry = DateUtil.getLocalDateTimeFromSeconds(exp);
+            if (expiry.isBefore(LocalDateTime.now())) {
                 throw new TokenExpiredExcpetion();
             }
             return payload;
@@ -72,9 +69,9 @@ public class WebTokenUtils {
 
     public static String getUserJson(String token)
         throws TokenExpiredExcpetion, TokenExtractionException {
-
         Map<String, Object> payload = verifyToken(token);
         String sub = payload.get(SUB).toString();
         return new String(Base64.decodeBase64(sub));
     }
+
 }

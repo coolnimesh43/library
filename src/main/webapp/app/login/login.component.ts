@@ -3,6 +3,8 @@ import {LoginService} from "./login.service";
 import {Login} from "../entity/Login";
 import {isLoggedIn} from '../login/login.service'
 import {Router, ROUTER_DIRECTIVES} from "angular2/router";
+import {Token} from "../entity/Token";
+import {Response} from "angular2/http";
 @Component({
     templateUrl:'./app/login/login.component.html',
     directives:[ROUTER_DIRECTIVES]

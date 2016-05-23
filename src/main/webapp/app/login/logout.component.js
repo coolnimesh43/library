@@ -24,8 +24,7 @@ var LogoutComponent = (function () {
         configurable: true
     });
     LogoutComponent.prototype.logout = function () {
-        var _this = this;
-        this._loginService.logout().subscribe(function (data) { return _this._router.navigate(['Login']); });
+        this._loginService.logout();
     };
     LogoutComponent = __decorate([
         core_1.Component({

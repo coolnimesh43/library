@@ -1,7 +1,6 @@
 
 package com.lftechnology.library.config;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,16 +24,22 @@ public class CORSResponseFilter implements ContainerResponseFilter {
     private Logger logger;
 
     @Override
-    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
-        throws IOException {
-        logger.debug("headeer: {} Request: {}", requestContext.getHeaderString(HttpHeaders.AUTHORIZATION), requestContext);
-        final MultivaluedMap<String, Object> headers = responseContext.getHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
-        headers.add("Access-Control-Allow-Headers", getRequestedHeaders(requestContext));
-        headers.add("Access-Control-Allow-Credentials", "true");
-        headers.add("Access-Control-Allow-Methods", ALLOWED_METHODS);
-        headers.add("Access-Control-Max-Age", MAX_AGE);
-        headers.add("x-responded-by", "cors-response-filter");
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
+        logger.debug(
+            "Auth header: {} Request: {} Response: ", requestContext.getHeaderString(HttpHeaders.AUTHORIZATION), requestContext,
+            responseContext);
+        try {
+            final MultivaluedMap<String, Object> headers = responseContext.getHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+            headers.add("Access-Control-Allow-Headers", getRequestedHeaders(requestContext));
+            headers.add("Access-Control-Allow-Credentials", "true");
+            headers.add("Access-Control-Allow-Methods", ALLOWED_METHODS);
+            headers.add("Access-Control-Max-Age", MAX_AGE);
+            headers.add("x-responded-by", "cors-response-filter");
+        }
+        catch (Exception e) {
+            logger.error("Exception inside CORSResponseFilter#filter method. Exception is: {}", e);
+        }
     }
 
     String getRequestedHeaders(ContainerRequestContext responseContext) {

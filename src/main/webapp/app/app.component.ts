@@ -15,22 +15,13 @@ import {LoginService} from "./login/login.service";
 import {AuthRouterOutlet} from "./filter/oauth.route.filter";
 import {LocalStorgeService} from "./service/local-storage";
 import {HttpClient} from "./config/http.client";
+import {TokenService} from "./service/token.service";
 @Component({
     selector: 'my-app',
     templateUrl: './app/app.component.html',
     directives: [ROUTER_DIRECTIVES, NavigationComponent, FooterComponent, AuthRouterOutlet],
     providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, VideoService, VideosComponent, YoutubeVideoService, AuthHttp, LoginService
-    //     , provide(AuthHttp, {
-    //     useFactory: (http) => {
-    //         return new AuthHttp(new AuthConfig({
-    //             tokenName:'accessToken',
-    //             noJwtError: true,
-    //             tokenGetter: localStorage.getItem("accessToken")
-    //         }), http);
-    //     },
-    //     deps: [Http]
-    // })
-        ,LocalStorgeService,HttpClient]
+        ,LocalStorgeService,HttpClient,TokenService]
 })
 @RouteConfig([
     {path: '/home', name: "Welcome", component: WelcomeComponent},

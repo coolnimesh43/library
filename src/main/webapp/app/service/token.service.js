@@ -8,28 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var http_client_1 = require("../config/http.client");
 var core_1 = require("angular2/core");
+var local_storage_1 = require("./local-storage");
 var http_1 = require("angular2/http");
-var local_storage_1 = require("../service/local-storage");
-var HttpClient = (function () {
-    function HttpClient(_storageService, _http) {
-        this._storageService = _storageService;
+var TokenService = (function () {
+    function TokenService(_httpClient, _localStorageService, _http) {
+        this._httpClient = _httpClient;
+        this._localStorageService = _localStorageService;
         this._http = _http;
+        this.ACCESS_TOKEN_REFRESH_URL = "http://localhost:8080/library/api/auth/refresh";
     }
-    HttpClient.prototype.setHeader = function () {
-        var finalHeader = new http_1.Headers();
-        var token = this._storageService.getFromLocalStorage("token");
-        if (token !== undefined) {
-            finalHeader.append('Authorization', "Bearer " + JSON.stringify(token));
-            finalHeader.append("Content-Type", "application/json");
-        }
-        return finalHeader;
-    };
-    HttpClient = __decorate([
+    TokenService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [local_storage_1.LocalStorgeService, http_1.Http])
-    ], HttpClient);
-    return HttpClient;
+        __metadata('design:paramtypes', [http_client_1.HttpClient, local_storage_1.LocalStorgeService, http_1.Http])
+    ], TokenService);
+    return TokenService;
 }());
-exports.HttpClient = HttpClient;
-//# sourceMappingURL=http.client.js.map
+exports.TokenService = TokenService;
+//# sourceMappingURL=token.service.js.map

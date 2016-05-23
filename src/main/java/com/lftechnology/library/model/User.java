@@ -14,9 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lftechnology.library.util.LocalDateAttributeConverter;
-import com.lftechnology.library.util.LocalDateTimeSerializer;
 
 @Entity
 @Table(name = "library_user")
@@ -40,12 +39,14 @@ public class User extends AbstractEntity {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Boolean active = Boolean.TRUE;
 
     @Column(name = "last_logged_in")
     @Convert(converter = LocalDateAttributeConverter.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    // @JsonSerialize(using = LocalDateTimeSerializer.class)
+    // @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonIgnore
     private LocalDateTime lastLoggedInDate;
 
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
@@ -141,6 +142,13 @@ public class User extends AbstractEntity {
 
     public void setFavouriteVideos(List<Video> favouriteVideos) {
         this.favouriteVideos = favouriteVideos;
+    }
+
+    @Override
+    public String toString() {
+        return "User [userName=" + userName + ", email=" + email + ", password=" + password + ", firstName=" + firstName + ", lastName=" +
+            lastName + ", address=" + address + ", active=" + active + ", lastLoggedInDate=" + lastLoggedInDate + ", favouriteVideos=" +
+            favouriteVideos + ", getId()=" + getId() + "]";
     }
 
     public static class UserBuilder {

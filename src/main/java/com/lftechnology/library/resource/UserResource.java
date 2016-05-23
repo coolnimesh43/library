@@ -39,6 +39,7 @@ public class UserResource {
         String password = user.getPassword();
         String encryptedPassword = DigestUtils.shaHex((salt + password).getBytes());
         user.setPassword(encryptedPassword);
+        user.setActive(Boolean.TRUE);
         return this.userDAO.save(user);
     }
 

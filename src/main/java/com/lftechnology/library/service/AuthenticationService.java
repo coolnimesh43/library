@@ -19,8 +19,7 @@ import com.lftechnology.library.pojo.Token;
 
 public interface AuthenticationService {
 
-    public static final Integer TOKEN_EXPIRY_MINUTES = 10;
-    public static final Integer TOKEN_DESTROY_MINUTES = 60 * 24 * 7;
+    public static final Integer TOKEN_EXPIRY_MINUTES = 60 * 24 * 7;
 
     /**
      * Method to authenticate the user. Takes in the {@link LoginPOJO}
@@ -53,9 +52,10 @@ public interface AuthenticationService {
      * @throws RefreshTokenExpiredException
      *             Exception occurred when refresh token presented by the user
      *             is invalid.
+     * @throws InvalidAccessTokenException
      */
     Token refreshAccessToken(String refreshToken)
-        throws TokenExtractionException, JsonProcessingException, RefreshTokenExpiredException;
+        throws JsonProcessingException, RefreshTokenExpiredException, InvalidAccessTokenException;
 
     /**
      * Method to validate the access token presented by the user.
