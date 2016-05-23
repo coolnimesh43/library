@@ -13,7 +13,7 @@ public class Video extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "url", nullable = false, unique = true)
+    @Column(name = "url", nullable = false, unique = true, columnDefinition = "TEXT")
     private String url;
 
     @Column(name = "video_id")
@@ -28,7 +28,7 @@ public class Video extends AbstractEntity {
     @Column(name = "duration")
     private String duration;
 
-    @Column(name = "name")
+    @Column(name = "name", columnDefinition = "TEXT")
     private String name;
 
     @Column(name = "active", nullable = false)
@@ -37,7 +37,7 @@ public class Video extends AbstractEntity {
     @Column(name = "shared", nullable = false)
     private Boolean shared = Boolean.TRUE;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @OneToOne(cascade = CascadeType.PERSIST)

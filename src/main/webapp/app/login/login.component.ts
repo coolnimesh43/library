@@ -31,7 +31,7 @@ export class LoginComponent implements  OnInit{
         loginPojo.email=this.email;
         loginPojo.password=this.password;
 
-        this._loginService.login(loginPojo).subscribe(ok => this._router.navigateByUrl('/home'),error =>this.errorMessage=this.errorMessageDefault);
+        this._loginService.login(loginPojo).subscribe(ok => window.location.reload(),error =>this.errorMessage=this.errorMessageDefault);
     }
 
 }

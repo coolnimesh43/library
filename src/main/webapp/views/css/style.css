@@ -124,3 +124,12 @@ figcaption {
     display: block;
     margin-top: 10px;
 }
+.col-md-4.pre-scrollable.background-black{
+    min-height:555px;
+}
+.col-md-4.pre-scrollable.background-black div:not(:first-child){
+    margin-top:30px;
+}
+.col-md-4.pre-scrollable.background-black div span{
+    margin:5px 0 10px 0;
+}

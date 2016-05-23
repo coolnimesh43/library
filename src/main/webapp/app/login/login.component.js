@@ -32,7 +32,7 @@ var LoginComponent = (function () {
         var loginPojo = new Login_1.Login();
         loginPojo.email = this.email;
         loginPojo.password = this.password;
-        this._loginService.login(loginPojo).subscribe(function (ok) { return _this._router.navigateByUrl('/home'); }, function (error) { return _this.errorMessage = _this.errorMessageDefault; });
+        this._loginService.login(loginPojo).subscribe(function (ok) { return window.location.reload(); }, function (error) { return _this.errorMessage = _this.errorMessageDefault; });
     };
     LoginComponent = __decorate([
         core_1.Component({

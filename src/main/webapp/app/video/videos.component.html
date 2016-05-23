@@ -24,7 +24,7 @@
     <div class="col-md-4 pre-scrollable background-black">
         <div class="content" *ngFor="#video of videos">
             <img [src]="video.image.url" [title]="video.name" [alt]="video.name" (click)="playVideo(video)">
-            <span class="pull-left">{{video.name}}</span> <span class="pull-right">{{video.duration}}</span>
+            <span class="pull-left">{{video.name}}</span> <span class="pull-right clearfix">{{video.duration | durationFilter}}</span>
         </div>
     </div>
 </div>
