@@ -64,7 +64,7 @@ exports.isLoggedIn = isLoggedIn;
 function getLoggedInUser() {
     var user;
     if (isLoggedIn()) {
-        user = localStorage.getItem("user");
+        user = JSON.parse(localStorage.getItem("user"));
     }
     return user;
 }

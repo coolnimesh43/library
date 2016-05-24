@@ -67,4 +67,10 @@ public class UserRoleServiceImpl implements UserRoleDAO {
         return null;
     }
 
+    @Override
+    public UserRole update(UserRole t) {
+        UserRole userRole = this.entityManager.merge(t);
+        return userRole;
+    }
+
 }

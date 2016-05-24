@@ -68,4 +68,10 @@ public class UserTokenServiceImpl implements UserTokenDAO {
         return token;
     }
 
+    @Override
+    public UserToken update(UserToken t) {
+        UserToken token = this.entityManager.merge(t);
+        return token;
+    }
+
 }

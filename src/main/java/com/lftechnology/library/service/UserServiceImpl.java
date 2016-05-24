@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.apache.logging.log4j.Logger;
+
 import com.lftechnology.library.dao.UserDAO;
 import com.lftechnology.library.model.User;
 
@@ -17,6 +19,9 @@ public class UserServiceImpl implements UserDAO {
 
     @Inject
     private EntityManager entityManager;
+
+    @Inject
+    private Logger logger;
 
     @Override
     public List<User> findAll() {
@@ -50,6 +55,13 @@ public class UserServiceImpl implements UserDAO {
         catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public User update(User user) {
+        logger.debug("Inside UserServiceImpl#update method. Request to update user: {}", user);
+        User updatedUser = this.entityManager.merge(user);
+        return updatedUser;
     }
 
 }

@@ -12,22 +12,21 @@ var core_1 = require("angular2/core");
 var http_1 = require("angular2/http");
 var local_storage_1 = require("../service/local-storage");
 var HttpClient = (function () {
-    function HttpClient(_storageService, _http) {
+    function HttpClient(_storageService) {
         this._storageService = _storageService;
-        this._http = _http;
     }
     HttpClient.prototype.setHeader = function () {
         var finalHeader = new http_1.Headers();
         var token = this._storageService.getFromLocalStorage("token");
-        if (token !== undefined) {
+        if (token !== undefined || token !== null) {
             finalHeader.append('Authorization', "Bearer " + JSON.stringify(token));
-            finalHeader.append("Content-Type", "application/json");
         }
+        finalHeader.append("Content-Type", "application/json");
         return finalHeader;
     };
     HttpClient = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [local_storage_1.LocalStorgeService, http_1.Http])
+        __metadata('design:paramtypes', [local_storage_1.LocalStorgeService])
     ], HttpClient);
     return HttpClient;
 }());

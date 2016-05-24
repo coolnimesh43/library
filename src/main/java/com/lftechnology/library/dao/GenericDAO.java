@@ -50,4 +50,14 @@ public interface GenericDAO<T, R> {
      *            The primary key of the entity to be deleted.
      */
     void delete(R id);
+
+    /**
+     * Method to update an entity.
+     * 
+     * @author nimesh
+     * @param t
+     *            The entity to be updated to.
+     * @return The updated entity.
+     */
+    T update(T t);
 }

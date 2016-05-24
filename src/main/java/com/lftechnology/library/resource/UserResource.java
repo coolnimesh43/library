@@ -19,6 +19,7 @@ import com.auth0.jwt.internal.org.apache.commons.codec.digest.DigestUtils;
 import com.lftechnology.library.config.ConfigurationProperties;
 import com.lftechnology.library.dao.UserDAO;
 import com.lftechnology.library.model.User;
+import com.lftechnology.library.producer.Secured;
 
 @Path("user")
 public class UserResource {
@@ -46,6 +47,7 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
+    @Secured
     public User get(@PathParam("id") String userId) {
         logger.debug("Inside UserResource#get method. User id is: {}", userId);
         return this.userDAO.findById(Long.valueOf(userId));
@@ -53,6 +55,7 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Secured
     public List<User> getAll() {
         logger.debug("Inside UserResource#getAll method.");
         return this.userDAO.findAll();

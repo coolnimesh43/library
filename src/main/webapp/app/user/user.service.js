@@ -10,34 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("angular2/core");
 var http_1 = require("angular2/http");
-var Observable_1 = require("rxjs/Observable");
-require('rxjs/Rx');
 var http_client_1 = require("../config/http.client");
-var VideoService = (function () {
-    function VideoService(_http, _httpClient) {
+var UserService = (function () {
+    function UserService(_http, _httpClient) {
         this._http = _http;
         this._httpClient = _httpClient;
-        this.videoUrl = 'http://localhost:8080/library/api/video';
+        this.USER_DETAILS_URL = 'http://localhost:8080/library/api/user/';
     }
-    VideoService.prototype.add = function (video) {
-        var headers = this._httpClient.setHeader();
-        return this._http.post(this.videoUrl, JSON.stringify(video), { headers: headers }).map(function (response) { return response.json(); })
-            .do()
-            .catch(this.handleError);
+    UserService.prototype.getUser = function (userId) {
+        if (userId !== undefined) {
+            var userDetailsUrl = this.USER_DETAILS_URL + userId;
+            var headers = this._httpClient.setHeader();
+            return this._http.get(userDetailsUrl, { headers: headers }).map(function (response) { return response.json(); });
+        }
     };
-    VideoService.prototype.getAll = function () {
-        return this._http.get(this.videoUrl).map(function (response) { return response.json(); })
-            .do()
-            .catch(this.handleError);
-    };
-    VideoService.prototype.handleError = function (error) {
-        return Observable_1.Observable.throw(error.json().error || 'server error');
-    };
-    VideoService = __decorate([
+    UserService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, http_client_1.HttpClient])
-    ], VideoService);
-    return VideoService;
+    ], UserService);
+    return UserService;
 }());
-exports.VideoService = VideoService;
-//# sourceMappingURL=VideoService.js.map
+exports.UserService = UserService;
+//# sourceMappingURL=user.service.js.map

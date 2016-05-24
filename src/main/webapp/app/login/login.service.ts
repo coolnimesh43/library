@@ -58,7 +58,7 @@ export class LoginService {
     export function getLoggedInUser():User {
         let user:User;
         if (isLoggedIn()) {
-            user = localStorage.getItem("user");
+            user = JSON.parse(localStorage.getItem("user"));
         }
         return user;
     }

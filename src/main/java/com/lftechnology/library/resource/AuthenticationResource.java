@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response.Status;
 import org.apache.logging.log4j.Logger;
 
 import com.lftechnology.library.exception.InvalidAccessTokenException;
-import com.lftechnology.library.model.User;
+import com.lftechnology.library.pojo.AuthenticatedUserWrapper;
 import com.lftechnology.library.pojo.LoginPOJO;
 import com.lftechnology.library.pojo.Token;
 import com.lftechnology.library.producer.AuthenticatedUser;
@@ -33,7 +33,7 @@ public class AuthenticationResource {
 
     @Inject
     @AuthenticatedUser
-    private User authenticatedUser;
+    private AuthenticatedUserWrapper authenticatedUserWrapper;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

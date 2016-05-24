@@ -7,16 +7,16 @@ import {Token} from "../entity/Token";
 @Injectable()
 export class HttpClient {
 
-    constructor(private _storageService:LocalStorgeService,private _http:Http) {
+    constructor(private _storageService:LocalStorgeService) {
     }
 
     public setHeader():Headers {
         let finalHeader:Headers=new Headers();
         let token:Token=this._storageService.getFromLocalStorage("token");
-        if(token!==undefined){
+        if(token!==undefined || token!==null){
             finalHeader.append('Authorization',"Bearer "+JSON.stringify(token));
-            finalHeader.append("Content-Type","application/json");
         }
+        finalHeader.append("Content-Type","application/json");
         return finalHeader;
     }
 

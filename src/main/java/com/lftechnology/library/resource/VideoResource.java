@@ -18,10 +18,12 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.logging.log4j.Logger;
 
+import com.lftechnology.library.dao.UserDAO;
 import com.lftechnology.library.dao.VideoDAO;
-import com.lftechnology.library.model.User;
 import com.lftechnology.library.model.Video;
+import com.lftechnology.library.pojo.AuthenticatedUserWrapper;
 import com.lftechnology.library.producer.AuthenticatedUser;
+import com.lftechnology.library.producer.Secured;
 
 @Path("video")
 @Stateless
@@ -31,11 +33,14 @@ public class VideoResource {
     private VideoDAO videoDAO;
 
     @Inject
+    private UserDAO userDAO;
+
+    @Inject
     private Logger logger;
 
     @Inject
     @AuthenticatedUser
-    private User authenticatedUser;
+    private AuthenticatedUserWrapper authenticatedUserWrapper;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -48,6 +53,7 @@ public class VideoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
+    @Secured
     public Video get(@PathParam("id") String videoId) {
         logger.debug("Inside VideoResource#get method. Video id is: {}", videoId);
         Long id = Long.parseLong(videoId);
@@ -57,10 +63,12 @@ public class VideoResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secured
     public Video save(@Valid Video video) {
         logger.debug("Inside VideoResource#save method. Video to be saved is: {}", video);
         video.setCreatedBy(1L);
         video.setLastModifiedBy(1L);
-        return this.videoDAO.save(video);
+        Video savedVideo = this.videoDAO.save(video);
+        return savedVideo;
     }
 }

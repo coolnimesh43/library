@@ -11,18 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("angular2/core");
 var router_1 = require("angular2/router");
 var login_service_1 = require("../login/login.service");
+var user_service_1 = require("./user.service");
 var UserComponent = (function () {
-    function UserComponent() {
+    function UserComponent(_userService) {
+        this._userService = _userService;
     }
     UserComponent.prototype.ngOnInit = function () {
-        this.user = JSON.parse(login_service_1.getLoggedInUser());
+        var _this = this;
+        var localuser = login_service_1.getLoggedInUser();
+        this._userService.getUser(localuser.id).subscribe(function (data) { return _this.user = data; }, function (error) { return _this.errorMessage = error; });
     };
     UserComponent = __decorate([
         core_1.Component({
             templateUrl: './app/user/user.component.html',
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [user_service_1.UserService])
     ], UserComponent);
     return UserComponent;
 }());

@@ -17,12 +17,13 @@ import {LocalStorgeService} from "./service/local-storage";
 import {HttpClient} from "./config/http.client";
 import {TokenService} from "./service/token.service";
 import {UserComponent} from "./user/user.component";
+import {UserService} from "./user/user.service";
 @Component({
     selector: 'my-app',
     templateUrl: './app/app.component.html',
     directives: [ROUTER_DIRECTIVES, NavigationComponent, FooterComponent, AuthRouterOutlet],
     providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, VideoService, VideosComponent, YoutubeVideoService, AuthHttp, LoginService
-        ,LocalStorgeService,HttpClient,TokenService]
+        ,LocalStorgeService,HttpClient,TokenService,UserService]
 })
 @RouteConfig([
     {path: '/home', name: "Welcome", component: WelcomeComponent},

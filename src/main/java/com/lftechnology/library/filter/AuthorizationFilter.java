@@ -18,8 +18,8 @@ import javax.ws.rs.core.Response.Status;
 
 import com.lftechnology.library.dao.UserRoleDAO;
 import com.lftechnology.library.enums.RoleEnum;
-import com.lftechnology.library.model.User;
 import com.lftechnology.library.model.UserRole;
+import com.lftechnology.library.pojo.AuthenticatedUserWrapper;
 import com.lftechnology.library.producer.AuthenticatedUser;
 import com.lftechnology.library.producer.Secured;
 
@@ -33,7 +33,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 
     @Inject
     @AuthenticatedUser
-    private User authenticatedUser;
+    private AuthenticatedUserWrapper authenticatedUserWrapper;
 
     @Inject
     private UserRoleDAO userRoleServiceImpl;
@@ -74,7 +74,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 
     private void checkPermission(List<RoleEnum> roles)
         throws Exception {
-        List<UserRole> userRoles = this.userRoleServiceImpl.findByUser(authenticatedUser);
+        List<UserRole> userRoles = this.userRoleServiceImpl.findByUser(authenticatedUserWrapper.getUser());
         Boolean isValid = userRoles.stream().anyMatch(userRole -> roles.contains(RoleEnum.valueOf(userRole.getRole().getName())));
         if (!isValid) {
             throw new Exception("Invalid roles");
