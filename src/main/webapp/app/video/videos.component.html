@@ -4,15 +4,15 @@
     </button>
     <strong>An error occurred while fetching videos. Please try again.</strong>
 </div>
-<div class="row mr-top" *ngIf="currentVideo">
+<div class="row" *ngIf="currentVideo">
     <div class="col-md-8">
-        <div class="content background-black">
+        <div class="content ">
             <iframe [src]="currentVideo.url" [width]="700" [height]="480" frameborder="0" allowfullscreen></iframe>
-            <div class="row">
+            <div class="row mr-top">
                 <div class="col-md-12">
-                    <div class="content background-black">
-                        <span class="video-title">{{currentVideo.name}}</span> &nbsp; &nbsp;
-                        <span>Duration: {{currentVideo.duration| durationFilter}}</span> &nbsp; &nbsp;
+                    <div class="content">
+                        <strong>{{currentVideo.name}}</strong> &nbsp; &nbsp;
+                        <strong>Duration: {{currentVideo.duration| durationFilter}}</strong> &nbsp; &nbsp;
                         <span class="btn btn-default glyphicon glyphicon-thumbs-up"> {{currentVideo.statistics.likeCount}}</span>
                         <span class="btn btn-default glyphicon glyphicon-thumbs-down"> {{currentVideo.statistics.dislikeCount}}</span>
                         <span class="btn btn-default glyphicon glyphicon-eye-open"> {{currentVideo.statistics.viewCount}}</span>
@@ -21,10 +21,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 pre-scrollable background-black">
-        <div class="content" *ngFor="#video of videos">
+    <div class="col-md-4 pre-scrollable">
+        <div class="content text-center videos-scroll" *ngFor="#video of videos">
             <img [src]="video.image.url" [title]="video.name" [alt]="video.name" (click)="playVideo(video)">
-            <span class="pull-left">{{video.name}}</span> <span class="pull-right clearfix">{{video.duration | durationFilter}}</span>
+            <pre><span class="pull-left"><strong>{{video.name}}</strong></span><span class="pull-right"><strong>{{video.duration | durationFilter}}</strong></span></pre>
         </div>
     </div>
 </div>

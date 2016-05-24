@@ -1,4 +1,5 @@
 import {Video} from "./Video";
+import {Album} from "./Album";
 export class User{
     id:number;
     createdBy:number;
@@ -13,5 +14,5 @@ export class User{
     address:string;
     active:boolean;
     lastLoggedInDate:Date;
-    favouriteVideos:Array<Video>;
+    albums:Array<Album>;
 }

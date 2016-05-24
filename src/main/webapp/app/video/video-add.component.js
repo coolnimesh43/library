@@ -12,21 +12,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("angular2/core");
 var router_1 = require("angular2/router");
 var Video_1 = require("../entity/Video");
-var VideoService_1 = require("./VideoService");
 var YoutubeVideoService_1 = require("./YoutubeVideoService");
 var YoutubeResponse_1 = require("../entity/YoutubeResponse");
+var login_service_1 = require("../login/login.service");
+var album_service_1 = require("../album/album.service");
+var album_add_component_1 = require("../album/album-add.component");
+var user_service_1 = require("../user/user.service");
 var VideoAddComponent = (function () {
-    function VideoAddComponent(_videoService, _youtubeVideoService) {
-        this._videoService = _videoService;
+    function VideoAddComponent(_albumService, _youtubeVideoService, _userService) {
+        this._albumService = _albumService;
         this._youtubeVideoService = _youtubeVideoService;
+        this._userService = _userService;
         this.youtubeEmbedUrl = "https://www.youtube.com/embed/";
         this.video = new Video_1.Video();
     }
+    VideoAddComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var user = login_service_1.getLoggedInUser();
+        this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
+    };
+    VideoAddComponent.prototype.selectAlbum = function (album) {
+        this.album = album;
+    };
     VideoAddComponent.prototype.add = function () {
         var _this = this;
         if (this.validateVideo()) {
             this.extractVideoContent();
-            var addVideo_1;
             this._youtubeVideoService.getVideoContent(this.video.videoId).subscribe(function (response) {
                 var youtubeResponse = response;
                 if (youtubeResponse.pageInfo.totalResults > 0) {
@@ -41,14 +52,23 @@ var VideoAddComponent = (function () {
                     _this.video.statistics.likeCount = stats.likeCount;
                     _this.video.statistics.dislikeCount = stats.dislikeCount;
                     _this.video.statistics.viewCount = stats.viewCount;
-                    addVideo_1 = _this._videoService.add(_this.video).subscribe(function (savedVideo) {
-                        _this.successMessage = 'Video added successfully.';
-                        _this.video = new Video_1.Video();
-                    }, function (error) { return _this.errorMessage = error; });
+                    _this._albumService.addVideo(_this.album.id, _this.video).subscribe(function (album) { return _this.album = album; }, function (error) { return _this.errorMessage = error; });
                 }
             }, function (error) {
-                _this.errorMessage = error;
+                _this.errorMessage = error.toString;
             });
+        }
+    };
+    VideoAddComponent.prototype.closeAddAlbumDialog = function (event) {
+        var _this = this;
+        console.log(event);
+        if (event) {
+            this.successMessage = 'Album added successfully.';
+            var user = login_service_1.getLoggedInUser();
+            this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
+        }
+        else {
+            this.errorMessage = 'An error occurred while adding new album. Please try again.';
         }
     };
     VideoAddComponent.prototype.validateVideo = function () {
@@ -90,9 +110,9 @@ var VideoAddComponent = (function () {
     VideoAddComponent = __decorate([
         core_1.Component({
             templateUrl: './app/video/video-add.component.html',
-            directives: [router_1.ROUTER_DIRECTIVES]
+            directives: [router_1.ROUTER_DIRECTIVES, album_add_component_1.AlbumAddComponent]
         }), 
-        __metadata('design:paramtypes', [VideoService_1.VideoService, YoutubeVideoService_1.YoutubeVideoService])
+        __metadata('design:paramtypes', [album_service_1.AlbumService, YoutubeVideoService_1.YoutubeVideoService, user_service_1.UserService])
     ], VideoAddComponent);
     return VideoAddComponent;
 }());

@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 
 import com.lftechnology.library.dao.UserDAO;
 import com.lftechnology.library.dao.VideoDAO;
-import com.lftechnology.library.model.User;
 import com.lftechnology.library.model.Video;
 import com.lftechnology.library.pojo.AuthenticatedUserWrapper;
 import com.lftechnology.library.producer.AuthenticatedUser;
@@ -40,9 +39,6 @@ public class VideoServiceImpl implements VideoDAO {
     @Override
     public Video save(Video object) {
         this.entityManager.persist(object);
-        User user = this.userDAO.findById(this.authenticatedUserWrapper.getUser().getId());
-        user.getFavouriteVideos().add(object);
-        this.userDAO.update(user);
         this.entityManager.flush();
         return object;
     }

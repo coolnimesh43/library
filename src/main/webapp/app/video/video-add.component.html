@@ -20,10 +20,28 @@
     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form class="">
+            <form >
                 <div class="form-group ">
                     <label for="video-url">Video Url</label>
                     <textarea id="video-url" class="form-control" required placeholder="Enter video url here..." [(ngModel)]="video.url"></textarea>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="dropdown">
+                            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+                                Select an album <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" *ngIf="albums">
+                                <li *ngFor="#album of albums" class="text-center" (click)="selectAlbum(album)" >{{album.name}}</li>
+                            </ul>
+                        </div>
+                        <span *ngIf="album">{{album.name}}</span>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn btn-info" data-toggle="modal" data-target="#add-album
+                        ">Album <i class="glyphicon glyphicon-plus"></i></button>
+                    </div>
+
                 </div>
                 <div class="checkbox">
                     <label>
@@ -33,6 +51,10 @@
                 </div>
                 <button (click)="add()"  class="btn btn-primary">Add</button>
             </form>
+
+            <div class="modal fade" id="add-album" role="dialog">
+                <add-album (close)="closeAddAlbumDialog($event)"></add-album>
+            </div>
         </div>
     </div>
 

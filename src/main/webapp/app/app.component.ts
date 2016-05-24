@@ -18,19 +18,21 @@ import {HttpClient} from "./config/http.client";
 import {TokenService} from "./service/token.service";
 import {UserComponent} from "./user/user.component";
 import {UserService} from "./user/user.service";
+import {AlbumService} from "./album/album.service";
+import {AlbumAddComponent} from "./album/album-add.component";
 @Component({
     selector: 'my-app',
     templateUrl: './app/app.component.html',
     directives: [ROUTER_DIRECTIVES, NavigationComponent, FooterComponent, AuthRouterOutlet],
     providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, VideoService, VideosComponent, YoutubeVideoService, AuthHttp, LoginService
-        ,LocalStorgeService,HttpClient,TokenService,UserService]
+        ,LocalStorgeService,HttpClient,TokenService,UserService,AlbumService]
 })
 @RouteConfig([
     {path: '/home', name: "Welcome", component: WelcomeComponent},
     {path: '/about', name: "About", component: AboutComponent},
     {path: '/video', name: "Video", component: VideoAddComponent},
     {path: '/login', name: "Login", component: LoginComponent, useAsDefault: true},
-    {path:'/user',name:"User",component:UserComponent}
+    {path:'/user',name:"User",component:UserComponent},
 ])
 export class AppComponent {
     constructor(private _router:Router) {

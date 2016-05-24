@@ -7,43 +7,56 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.auth0.jwt.internal.com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "video")
 public class Video extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "url", nullable = false, unique = true, columnDefinition = "TEXT")
+    @Column(name = "url", nullable = false, columnDefinition = "TEXT")
+    @JsonProperty("url")
     private String url;
 
     @Column(name = "video_id")
+    @JsonProperty("videoId")
     private String videoId;
 
     @Column(name = "frame_height")
+    @JsonProperty("frameHeight")
     private Integer frameHeight;
 
     @Column(name = "frame_width")
+    @JsonProperty("frameWidth")
     private Integer frameWidth;
 
     @Column(name = "duration")
+    @JsonProperty("duration")
     private String duration;
 
     @Column(name = "name", columnDefinition = "TEXT")
+    @JsonProperty("name")
     private String name;
 
-    @Column(name = "active", nullable = false)
+    @Column(name = "active")
+    @JsonProperty("active")
     private Boolean active = Boolean.TRUE;
 
-    @Column(name = "shared", nullable = false)
+    @Column(name = "shared")
+    @JsonProperty("shared")
     private Boolean shared = Boolean.TRUE;
 
     @Column(name = "description", columnDefinition = "TEXT")
+    @JsonProperty("description")
     private String description;
 
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JsonProperty("image")
     private Image image;
 
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JsonProperty("statistics")
     private Statistics statistics;
 
     public Video() {
@@ -127,20 +140,20 @@ public class Video extends AbstractEntity {
         this.shared = shared;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public Statistics getStatistics() {

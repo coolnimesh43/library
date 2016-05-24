@@ -9,9 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -44,15 +42,19 @@ public class User extends AbstractEntity {
 
     @Column(name = "last_logged_in")
     @Convert(converter = LocalDateAttributeConverter.class)
-    // @JsonSerialize(using = LocalDateTimeSerializer.class)
-    // @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonIgnore
     private LocalDateTime lastLoggedInDate;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_video", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id"), }, inverseJoinColumns = {
-        @JoinColumn(name = "video_id", referencedColumnName = "id", unique = true) })
-    private List<Video> favouriteVideos;
+    // @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch =
+    // FetchType.EAGER)
+    // @JoinTable(name = "user_video", joinColumns = { @JoinColumn(name =
+    // "user_id", referencedColumnName = "id"), }, inverseJoinColumns = {
+    // @JoinColumn(name = "video_id", referencedColumnName = "id", unique =
+    // true) })
+    // private List<Video> favouriteVideos;
+
+    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+    private List<Album> albums;
 
     public User() {
         super();
@@ -69,7 +71,8 @@ public class User extends AbstractEntity {
         this.address = builder.address;
         this.setCreatedBy(builder.createdBy);
         this.setLastModifiedBy(builder.lastModifiedBy);
-        this.favouriteVideos = builder.favouriteVideos;
+        this.albums = builder.albums;
+        // this.favouriteVideos = builder.favouriteVideos;
     }
 
     public String getUserName() {
@@ -136,19 +139,27 @@ public class User extends AbstractEntity {
         this.lastLoggedInDate = lastLoggedInDate;
     }
 
-    public List<Video> getFavouriteVideos() {
-        return favouriteVideos;
+    // public List<Video> getFavouriteVideos() {
+    // return favouriteVideos;
+    // }
+    //
+    // public void setFavouriteVideos(List<Video> favouriteVideos) {
+    // this.favouriteVideos = favouriteVideos;
+    // }
+
+    public List<Album> getAlbums() {
+        return albums;
     }
 
-    public void setFavouriteVideos(List<Video> favouriteVideos) {
-        this.favouriteVideos = favouriteVideos;
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
     }
 
     @Override
     public String toString() {
         return "User [userName=" + userName + ", email=" + email + ", password=" + password + ", firstName=" + firstName + ", lastName=" +
-            lastName + ", address=" + address + ", active=" + active + ", lastLoggedInDate=" + lastLoggedInDate + ", favouriteVideos=" +
-            favouriteVideos + ", getId()=" + getId() + "]";
+            lastName + ", address=" + address + ", active=" + active + ", lastLoggedInDate=" + lastLoggedInDate + ", albums=" + albums +
+            ", getId()=" + getId() + "]";
     }
 
     public static class UserBuilder {
@@ -163,7 +174,8 @@ public class User extends AbstractEntity {
         private LocalDateTime lastLoggedInDate;
         private Long createdBy;
         private Long lastModifiedBy;
-        private List<Video> favouriteVideos;
+        // private List<Video> favouriteVideos;
+        private List<Album> albums;
 
         public UserBuilder(String userName, String email, String password) {
             super();
@@ -207,8 +219,12 @@ public class User extends AbstractEntity {
             return this;
         }
 
-        public UserBuilder favouriteVideos(List<Video> videos) {
-            this.favouriteVideos = videos;
+        // public UserBuilder favouriteVideos(List<Video> videos) {
+        // this.favouriteVideos = videos;
+        // return this;
+        // }
+        public UserBuilder albums(List<Album> albums) {
+            this.albums = albums;
             return this;
         }
 

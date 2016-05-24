@@ -1,29 +1,43 @@
 ///<reference path="../../typings/jquery/jquery.d.ts" />
-import {Component} from "angular2/core";
+import {Component, OnInit} from "angular2/core";
 import {ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Video} from "../entity/Video";
 import {VideoService} from "./VideoService";
 import {YoutubeVideoService} from "./YoutubeVideoService";
 import {YoutubeResponse, Snippet, Item, Statistics} from "../entity/YoutubeResponse";
-import {isLoggedIn} from "../login/login.service";
+import {isLoggedIn, getLoggedInUser} from "../login/login.service";
+import {AlbumService} from "../album/album.service";
+import {Album} from "../entity/Album";
+import {AlbumAddComponent} from "../album/album-add.component";
+import {UserService} from "../user/user.service";
+import {User} from "../entity/User";
 @Component({
     templateUrl: './app/video/video-add.component.html',
-    directives: [ROUTER_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES,AlbumAddComponent]
 })
-export class VideoAddComponent {
+export class VideoAddComponent implements OnInit{
     private youtubeEmbedUrl:string = "https://www.youtube.com/embed/";
     video:Video;
+    album:Album;
+    albums:Array<Album>;
     errorMessage:string;
     successMessage:string;
 
-    constructor(private _videoService:VideoService, private _youtubeVideoService:YoutubeVideoService) {
+    constructor(private _albumService:AlbumService, private _youtubeVideoService:YoutubeVideoService,private _userService:UserService) {
         this.video = new Video();
     }
 
+    ngOnInit():void{
+        let user:User=getLoggedInUser();
+        this._userService.getUser(user.id).subscribe(data => this.albums=data.albums, error => this.errorMessage=<any> error);
+    }
+
+    selectAlbum(album:Album):void{
+        this.album=album;
+    }
     add():void {
         if (this.validateVideo()) {
             this.extractVideoContent();
-            let addVideo;
             this._youtubeVideoService.getVideoContent(this.video.videoId).subscribe(response => {
                 let youtubeResponse:YoutubeResponse = response;
                 if (youtubeResponse.pageInfo.totalResults > 0) {
@@ -38,18 +52,26 @@ export class VideoAddComponent {
                     this.video.statistics.likeCount = stats.likeCount;
                     this.video.statistics.dislikeCount = stats.dislikeCount;
                     this.video.statistics.viewCount = stats.viewCount;
-                    addVideo = this._videoService.add(this.video).subscribe(savedVideo => {
-                        this.successMessage = 'Video added successfully.';
-                        this.video = new Video();
-                    }, error =>this.errorMessage = <any> error);
+                   this._albumService.addVideo(this.album.id,this.video).subscribe(album => this.album=album, error => this.errorMessage=<any>error);
                 }
 
             }, error => {
-                this.errorMessage = <any>error;
+                this.errorMessage = error.toString;
              });
         }
     }
 
+    public closeAddAlbumDialog(event){
+        console.log(event);
+        if(event){
+            this.successMessage='Album added successfully.';
+            let user:User=getLoggedInUser();
+            this._userService.getUser(user.id).subscribe(data => this.albums=data.albums, error => this.errorMessage=<any> error);
+        }
+        else{
+            this.errorMessage='An error occurred while adding new album. Please try again.';
+        }
+    }
     private validateVideo():boolean {
         let isValid:boolean = true;
         isValid = isValid && this.video !== undefined;
