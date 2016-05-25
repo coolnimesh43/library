@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 import org.apache.logging.log4j.Logger;
 
 import com.lftechnology.library.dao.AlbumDAO;
+import com.lftechnology.library.dao.UserDAO;
 import com.lftechnology.library.model.Album;
 import com.lftechnology.library.model.Video;
 import com.lftechnology.library.pojo.AuthenticatedUserWrapper;
@@ -32,6 +33,9 @@ public class AlbumResource {
 
     @Inject
     private AlbumDAO albumDAO;
+
+    @Inject
+    private UserDAO userDAO;
 
     @Inject
     private Logger logger;

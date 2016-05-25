@@ -52,17 +52,19 @@ var VideoAddComponent = (function () {
                     _this.video.statistics.likeCount = stats.likeCount;
                     _this.video.statistics.dislikeCount = stats.dislikeCount;
                     _this.video.statistics.viewCount = stats.viewCount;
-                    _this._albumService.addVideo(_this.album.id, _this.video).subscribe(function (album) { return _this.album = album; }, function (error) { return _this.errorMessage = error; });
+                    _this._albumService.addVideo(_this.album.id, _this.video).subscribe(function (album) { _this.successMessage = "Video added successfully."; }, function (error) { return _this.errorMessage = error; });
                 }
             }, function (error) {
                 _this.errorMessage = error.toString;
             });
         }
+        else {
+            this.errorMessage = "Please enter all the required data.";
+        }
     };
-    VideoAddComponent.prototype.closeAddAlbumDialog = function (event) {
+    VideoAddComponent.prototype.closeAddAlbumDialog = function (data) {
         var _this = this;
-        console.log(event);
-        if (event) {
+        if (data === 'ok') {
             this.successMessage = 'Album added successfully.';
             var user = login_service_1.getLoggedInUser();
             this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
@@ -75,6 +77,7 @@ var VideoAddComponent = (function () {
         var isValid = true;
         isValid = isValid && this.video !== undefined;
         isValid = isValid && this.video.url !== undefined;
+        isValid = isValid && this.album !== undefined;
         return isValid;
     };
     VideoAddComponent.prototype.extractVideoContent = function () {

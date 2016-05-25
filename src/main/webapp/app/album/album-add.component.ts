@@ -8,21 +8,23 @@ import {AlbumService} from "./album.service";
 export class AlbumAddComponent{
     album:Album;
     @Output()
-    close:EventEmitter<boolean>=new EventEmitter();
-    success:boolean;
+    close:EventEmitter<string>=new EventEmitter();
+    success:string;
     constructor(private _albumService:AlbumService){
         this.album=new Album();
     }
 
     add():void{
         if(this.album.name!==undefined){
-            this._albumService.add(this.album).subscribe(data => this.success=true, error => {this.success=false; console.log(error)});
-            this.album=new Album();
-            this.fireClose(this.success);
+            this._albumService.add(this.album).subscribe(data =>{
+                this.success='ok';
+                this.album=new Album();
+                this.fireClose(this.success);
+            }, error => {this.success='error';});
         }
     }
 
-    fireClose(success:boolean):void{
+    fireClose(success:string):void{
         this.close.emit(success);
     }
 }

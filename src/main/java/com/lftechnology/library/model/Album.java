@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -30,9 +29,6 @@ public class Album extends AbstractEntity {
         @JoinColumn(name = "video_id", referencedColumnName = "id") })
     private List<Video> videos;
 
-    @ManyToOne
-    private User user;
-
     public String getName() {
         return name;
     }
@@ -49,17 +45,9 @@ public class Album extends AbstractEntity {
         this.videos = videos;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
-        return "Album [name=" + name + ", videos=" + videos + ", user=" + user + "]";
+        return "Album [name=" + name + ", videos=" + videos + ", getId()=" + getId() + "]";
     }
 
 }

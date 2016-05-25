@@ -11,7 +11,7 @@
                 </div>
                 <div id="album" class="panel-collapse collapse">
                     <ul class="list-group">
-                        <li class="list-group-item text-center" *ngFor="#album of albums">{{album.name}}</li>
+                        <li class="list-group-item text-center" id="album-list" *ngFor="#album of albums" [class.selected]="album===selectedAlbum" (click)="selectAlbum(album)">{{album.name}}</li>
                     </ul>
                 </div>
             </div>

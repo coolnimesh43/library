@@ -45,7 +45,7 @@ public class Video extends AbstractEntity {
 
     @Column(name = "shared")
     @JsonProperty("shared")
-    private Boolean shared = Boolean.TRUE;
+    private Boolean shared = Boolean.FALSE;
 
     @Column(name = "description", columnDefinition = "TEXT")
     @JsonProperty("description")
@@ -167,7 +167,8 @@ public class Video extends AbstractEntity {
     @Override
     public String toString() {
         return "Video [url=" + url + ", videoId=" + videoId + ", frameHeight=" + frameHeight + ", frameWidth=" + frameWidth +
-            ", duration=" + duration + ", name=" + name + ", active=" + active + ", getId()=" + getId() + ", shared" + shared + "]";
+            ", duration=" + duration + ", name=" + name + ", active=" + active + ", shared=" + shared + ", description=" + description +
+            ", image=" + image + ", statistics=" + statistics + ", getId()=" + getId() + "]";
     }
 
     public static class VideoBuilder {

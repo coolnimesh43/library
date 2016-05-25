@@ -52,18 +52,19 @@ export class VideoAddComponent implements OnInit{
                     this.video.statistics.likeCount = stats.likeCount;
                     this.video.statistics.dislikeCount = stats.dislikeCount;
                     this.video.statistics.viewCount = stats.viewCount;
-                   this._albumService.addVideo(this.album.id,this.video).subscribe(album => this.album=album, error => this.errorMessage=<any>error);
+                   this._albumService.addVideo(this.album.id,this.video).subscribe(album => {this.successMessage="Video added successfully."}, error => this.errorMessage=<any>error);
                 }
 
             }, error => {
                 this.errorMessage = error.toString;
              });
+        }else{
+            this.errorMessage="Please enter all the required data.";
         }
     }
 
-    public closeAddAlbumDialog(event){
-        console.log(event);
-        if(event){
+    public closeAddAlbumDialog(data){
+        if(data==='ok'){
             this.successMessage='Album added successfully.';
             let user:User=getLoggedInUser();
             this._userService.getUser(user.id).subscribe(data => this.albums=data.albums, error => this.errorMessage=<any> error);
@@ -76,6 +77,7 @@ export class VideoAddComponent implements OnInit{
         let isValid:boolean = true;
         isValid = isValid && this.video !== undefined;
         isValid = isValid && this.video.url !== undefined;
+        isValid=isValid && this.album!==undefined;
         return isValid;
     }
 

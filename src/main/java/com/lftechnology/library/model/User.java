@@ -2,14 +2,16 @@
 package com.lftechnology.library.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,16 +47,10 @@ public class User extends AbstractEntity {
     @JsonIgnore
     private LocalDateTime lastLoggedInDate;
 
-    // @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch =
-    // FetchType.EAGER)
-    // @JoinTable(name = "user_video", joinColumns = { @JoinColumn(name =
-    // "user_id", referencedColumnName = "id"), }, inverseJoinColumns = {
-    // @JoinColumn(name = "video_id", referencedColumnName = "id", unique =
-    // true) })
-    // private List<Video> favouriteVideos;
-
-    @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
-    private List<Album> albums;
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_album", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+        @JoinColumn(name = "album_id", referencedColumnName = "id") })
+    private Set<Album> albums;
 
     public User() {
         super();
@@ -72,7 +68,6 @@ public class User extends AbstractEntity {
         this.setCreatedBy(builder.createdBy);
         this.setLastModifiedBy(builder.lastModifiedBy);
         this.albums = builder.albums;
-        // this.favouriteVideos = builder.favouriteVideos;
     }
 
     public String getUserName() {
@@ -139,19 +134,11 @@ public class User extends AbstractEntity {
         this.lastLoggedInDate = lastLoggedInDate;
     }
 
-    // public List<Video> getFavouriteVideos() {
-    // return favouriteVideos;
-    // }
-    //
-    // public void setFavouriteVideos(List<Video> favouriteVideos) {
-    // this.favouriteVideos = favouriteVideos;
-    // }
-
-    public List<Album> getAlbums() {
+    public Set<Album> getAlbums() {
         return albums;
     }
 
-    public void setAlbums(List<Album> albums) {
+    public void setAlbums(Set<Album> albums) {
         this.albums = albums;
     }
 
@@ -174,8 +161,7 @@ public class User extends AbstractEntity {
         private LocalDateTime lastLoggedInDate;
         private Long createdBy;
         private Long lastModifiedBy;
-        // private List<Video> favouriteVideos;
-        private List<Album> albums;
+        private Set<Album> albums;
 
         public UserBuilder(String userName, String email, String password) {
             super();
@@ -219,11 +205,7 @@ public class User extends AbstractEntity {
             return this;
         }
 
-        // public UserBuilder favouriteVideos(List<Video> videos) {
-        // this.favouriteVideos = videos;
-        // return this;
-        // }
-        public UserBuilder albums(List<Album> albums) {
+        public UserBuilder albums(Set<Album> albums) {
             this.albums = albums;
             return this;
         }

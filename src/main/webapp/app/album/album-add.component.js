@@ -20,9 +20,11 @@ var AlbumAddComponent = (function () {
     AlbumAddComponent.prototype.add = function () {
         var _this = this;
         if (this.album.name !== undefined) {
-            this._albumService.add(this.album).subscribe(function (data) { return _this.success = true; }, function (error) { _this.success = false; console.log(error); });
-            this.album = new Album_1.Album();
-            this.fireClose(this.success);
+            this._albumService.add(this.album).subscribe(function (data) {
+                _this.success = 'ok';
+                _this.album = new Album_1.Album();
+                _this.fireClose(_this.success);
+            }, function (error) { _this.success = 'error'; });
         }
     };
     AlbumAddComponent.prototype.fireClose = function (success) {

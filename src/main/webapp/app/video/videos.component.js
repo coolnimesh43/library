@@ -12,6 +12,7 @@ var Video_1 = require("../entity/Video");
 var core_1 = require("angular2/core");
 var VideoService_1 = require("./VideoService");
 var duration_filter_1 = require("../filter/duration.filter");
+var album_component_1 = require("../album/album.component");
 var VideosComponent = (function () {
     function VideosComponent(_videoService) {
         this._videoService = _videoService;
@@ -26,6 +27,12 @@ var VideosComponent = (function () {
             }
         }, function (error) { return _this.errorMessage = error; });
     };
+    VideosComponent.prototype.selectAlbum = function (album) {
+        if (album !== undefined) {
+            this.videos = album.videos;
+            this.currentVideo = this.videos[0];
+        }
+    };
     VideosComponent.prototype.playVideo = function (video) {
         if (video !== undefined) {
             this.currentVideo = video;
@@ -35,7 +42,8 @@ var VideosComponent = (function () {
         core_1.Component({
             selector: 'videos',
             templateUrl: './app/video/videos.component.html',
-            pipes: [duration_filter_1.DurationFilter]
+            pipes: [duration_filter_1.DurationFilter],
+            directives: [album_component_1.AlbumComponent]
         }), 
         __metadata('design:paramtypes', [VideoService_1.VideoService])
     ], VideosComponent);

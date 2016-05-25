@@ -172,6 +172,9 @@ td{
 .album #album ul li:hover{
     cursor: pointer;
 }
+.album #album ul li:active{
+    background-color: #CCCCCC;
+}
 
 .row li{
     color:#262626;
@@ -187,4 +190,10 @@ td{
 }
 .modal-body form label, .modal-body form input{
     color: #000000;
+}
+.panel-group ul li:active{
+    background-color: #CCCCCC;
+}
+.selected{
+    background-color: #CCCCCC !important;
 }

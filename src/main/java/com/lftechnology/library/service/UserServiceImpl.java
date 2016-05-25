@@ -25,25 +25,48 @@ public class UserServiceImpl implements UserDAO {
 
     @Override
     public List<User> findAll() {
-        return this.entityManager.createQuery("Select user from User user where user.active=?", User.class).setParameter(
-            1, true).getResultList();
+        try {
+            return this.entityManager.createQuery("Select user from User user where user.active=?", User.class).setParameter(
+                1, true).getResultList();
+        }
+        catch (Exception e) {
+            logger.debug("Inside VideoServieImpl while getting all users. Exception is: {}", e);
+            return null;
+        }
     }
 
     @Override
     public User findById(Long id) {
-        return this.entityManager.find(User.class, id);
+        try {
+            return this.entityManager.find(User.class, id);
+        }
+        catch (Exception e) {
+            logger.debug("Inside VideoServieImpl while finding user by id. Exception is: {}", e);
+            return null;
+        }
     }
 
     @Override
     public User save(User object) {
-        this.entityManager.persist(object);
-        this.entityManager.flush();
-        return object;
+        try {
+            this.entityManager.persist(object);
+            this.entityManager.flush();
+            return object;
+        }
+        catch (Exception e) {
+            logger.debug("Inside VideoServieImpl while saving user. Exception is: {}", e);
+            return null;
+        }
     }
 
     @Override
     public void delete(Long id) {
-        this.entityManager.remove(this.findById(id));
+        try {
+            this.entityManager.remove(this.findById(id));
+        }
+        catch (Exception e) {
+            logger.debug("Inside VideoServieImpl while deleting user. Exception is: {}", e);
+        }
     }
 
     @Override
@@ -60,8 +83,14 @@ public class UserServiceImpl implements UserDAO {
     @Override
     public User update(User user) {
         logger.debug("Inside UserServiceImpl#update method. Request to update user: {}", user);
-        User updatedUser = this.entityManager.merge(user);
-        return updatedUser;
+        try {
+            User updatedUser = this.entityManager.merge(user);
+            return updatedUser;
+        }
+        catch (Exception e) {
+            logger.debug("Inside VideoServieImpl while updating user. Exception is: {}", e);
+            return null;
+        }
     }
 
 }

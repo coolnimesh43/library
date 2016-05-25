@@ -59,7 +59,9 @@ public class UserResource {
     @Secured
     public User get(@PathParam("id") String userId) {
         logger.debug("Inside UserResource#get method. User id is: {}", userId);
-        return this.userDAO.findById(Long.valueOf(userId));
+        User user = this.userDAO.findById(Long.valueOf(userId));
+        logger.debug("Found user: {}", user);
+        return user;
     }
 
     @GET

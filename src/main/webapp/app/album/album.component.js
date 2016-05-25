@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+///<reference path="../../typings/jquery/jquery.d.ts" />
 var core_1 = require("angular2/core");
 var album_service_1 = require("./album.service");
 var user_service_1 = require("../user/user.service");
@@ -16,12 +17,29 @@ var AlbumComponent = (function () {
     function AlbumComponent(_albumService, _userService) {
         this._albumService = _albumService;
         this._userService = _userService;
+        this.currentAlbum = new core_1.EventEmitter();
     }
     AlbumComponent.prototype.ngOnInit = function () {
         var _this = this;
         var user = login_service_1.getLoggedInUser();
         this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
     };
+    AlbumComponent.prototype.ngAfterViewInit = function () {
+    };
+    AlbumComponent.prototype.selectAlbum = function (album) {
+        $('#album').collapse('hide');
+        if (album !== undefined) {
+            this.selectedAlbum = album;
+            this.fireEvent(album);
+        }
+    };
+    AlbumComponent.prototype.fireEvent = function (album) {
+        this.currentAlbum.emit(album);
+    };
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], AlbumComponent.prototype, "currentAlbum", void 0);
     AlbumComponent = __decorate([
         core_1.Component({
             selector: 'album',

@@ -4,6 +4,7 @@
     </button>
     <strong>An error occurred while fetching videos. Please try again.</strong>
 </div>
+<album (currentAlbum)="selectAlbum($event)"></album>
 <div class="row" *ngIf="currentVideo">
     <div class="col-md-8">
         <div class="content ">
@@ -21,10 +22,19 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 pre-scrollable">
+    <div class="col-md-4 pre-scrollable" *ngIf="videos">
         <div class="content text-center videos-scroll" *ngFor="#video of videos">
             <img [src]="video.image.url" [title]="video.name" [alt]="video.name" (click)="playVideo(video)">
             <pre><span class="pull-left"><strong>{{video.name}}</strong></span><span class="pull-right"><strong>{{video.duration | durationFilter}}</strong></span></pre>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="!currentVideo">
+    <div class="col-md-8">
+        <div class="content text-center">
+            <div class="well alert-danger">
+                No video found.
+            </div>
         </div>
     </div>
 </div>
