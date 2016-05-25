@@ -16,12 +16,18 @@ var UserService = (function () {
         this._http = _http;
         this._httpClient = _httpClient;
         this.USER_DETAILS_URL = 'http://localhost:8080/library/api/user/';
+        this.headers = this._httpClient.setHeader();
     }
     UserService.prototype.getUser = function (userId) {
         if (userId !== undefined) {
             var userDetailsUrl = this.USER_DETAILS_URL + userId;
-            var headers = this._httpClient.setHeader();
-            return this._http.get(userDetailsUrl, { headers: headers }).map(function (response) { return response.json(); });
+            return this._http.get(userDetailsUrl, { headers: this.headers }).map(function (response) { return response.json(); });
+        }
+    };
+    UserService.prototype.create = function (user) {
+        if (user !== undefined) {
+            return this._http.post(this.USER_DETAILS_URL, JSON.stringify(user), { headers: this.headers })
+                .map(function (response) { return response.json(); });
         }
     };
     UserService = __decorate([

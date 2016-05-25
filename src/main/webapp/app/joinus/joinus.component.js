@@ -13,20 +13,27 @@ var User_1 = require("../entity/User");
 var router_1 = require("angular2/router");
 var joinus_service_1 = require("./joinus.service");
 var Observable_1 = require("rxjs/Observable");
+var user_service_1 = require("../user/user.service");
+var local_storage_1 = require("../service/local-storage");
 var JoinUsComponent = (function () {
-    function JoinUsComponent(_joinUsService) {
+    function JoinUsComponent(_joinUsService, _userService, _storageService) {
         this._joinUsService = _joinUsService;
+        this._userService = _userService;
+        this._storageService = _storageService;
         this.user = new User_1.User();
     }
     JoinUsComponent.prototype.joinUs = function () {
+        var _this = this;
         this.errorMessage = '';
         if (this.validate()) {
-            console.log('valid');
+            this._userService.create(this.user).subscribe(function (data) {
+                _this.success = true;
+            }, function (error) { return _this.errorMessage = 'An error occurred while creating your account. Please try again.'; });
         }
     };
     JoinUsComponent.prototype.validate = function () {
+        var _this = this;
         var user = this.user;
-        console.log(user);
         if (user === undefined) {
             this.errorMessage = 'Please fill up the required fields.';
             return false;
@@ -56,19 +63,29 @@ var JoinUsComponent = (function () {
             this.errorMessage = 'Invalid last name.';
             return false;
         }
-        Observable_1.Observable.forkJoin(this._joinUsService.checkUserName(user.userName), this._joinUsService.checkEmail(user.email))
-            .subscribe(function (data) {
-            console.log(data);
-            return data[0] && data[1];
-        });
+        else if (user.userName.length >= 6 && user.email) {
+            Observable_1.Observable.forkJoin(this._joinUsService.checkUserName(user.userName), this._joinUsService.checkEmail(user.email))
+                .subscribe(function (data) {
+                console.log("username : " + data[0] + " email: " + data[1]);
+                if (data[0]) {
+                    _this.errorMessage = 'This username already exists. Please choose another one.';
+                }
+                else if (data[1]) {
+                    _this.errorMessage = 'This email already exists. Please choose another one.';
+                }
+                console.log("is valid: {}", !data[0] && !data[1]);
+                return (!data[0] && !data[1]);
+            });
+        }
+        return true;
     };
     JoinUsComponent = __decorate([
         core_1.Component({
             templateUrl: './app/joinus/joinus.component.html',
             directives: [router_1.ROUTER_DIRECTIVES],
-            providers: [joinus_service_1.JoinUsService]
+            providers: [joinus_service_1.JoinUsService, user_service_1.UserService]
         }), 
-        __metadata('design:paramtypes', [joinus_service_1.JoinUsService])
+        __metadata('design:paramtypes', [joinus_service_1.JoinUsService, user_service_1.UserService, local_storage_1.LocalStorgeService])
     ], JoinUsComponent);
     return JoinUsComponent;
 }());

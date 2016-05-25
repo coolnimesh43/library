@@ -1,7 +1,6 @@
 <div class="container container-fluid">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h1 class="text-center login-title">Join us. Enter your details here.</h1>
             <div class="account-wall">
                 <img class="profile-img" src="views/images/filmreel.png" alt="Music Video">
                 <div *ngIf="errorMessage">
@@ -9,7 +8,7 @@
                         <p>{{errorMessage}}</p>
                     </div>
                 </div>
-                <form class="form-horizontal" (submit)="joinUs()">
+                <form class="form-horizontal" (submit)="joinUs()" *ngIf="!success">
                     <div class="form-group text-center">
                         <label for="email" class="col-md-3 control-label">Email</label>
                         <div class="col-md-6">
@@ -25,13 +24,13 @@
                     <div class="form-group">
                         <label for="password" class="col-md-3 control-label">Password</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="password" placeholder="Password" minlength="6" required [(ngModel)]="user.password">
+                            <input type="password" class="form-control" id="password" placeholder="Password" minlength="6" required [(ngModel)]="user.password">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="re-password" class="col-md-3 control-label">Re-Enter Password</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="re-password" placeholder="Re-Enter password" required [(ngModel)]="rePassword">
+                            <input type="password" class="form-control" id="re-password" placeholder="Re-Enter password" required [(ngModel)]="rePassword">
                         </div>
                     </div>
                     <div class="form-group">
@@ -58,6 +57,10 @@
                         </div>
                     </div>
                 </form>
+                <div class="content text-center modal-header" *ngIf="success">
+                    <p><strong>Congratulations!!!</strong></p>
+                    <p>Your account has been created successfully. Please click <a [routerLink]="['Login']" title="Login">here</a> to login to your account.</p>
+                </div>
             </div>
         </div>
     </div>

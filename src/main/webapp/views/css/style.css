@@ -214,15 +214,3 @@ td{
 form label{
     color:black;
 }
-
-.form-signin label{
-    float: left;
-    width: 30%;
-    text-align: right;
-    padding-right: 10px;
-    margin: 5px 0px 5px 0px;
-}
-.form-signin input{
-    width: 70%;
-    margin: 0px;
-}

@@ -3,30 +3,34 @@ import {User} from "../entity/User";
 import {ROUTER_DIRECTIVES} from "angular2/router";
 import {JoinUsService} from "./joinus.service";
 import {Observable} from "rxjs/Observable";
+import {UserService} from "../user/user.service";
+import {LocalStorgeService} from "../service/local-storage";
 @Component({
     templateUrl: './app/joinus/joinus.component.html',
     directives: [ROUTER_DIRECTIVES],
-    providers:[JoinUsService]
+    providers:[JoinUsService,UserService]
 })
 export class JoinUsComponent {
     user:User;
     rePassword:string;
     errorMessage:string;
+    success:boolean;
 
-    constructor(private _joinUsService:JoinUsService) {
+    constructor(private _joinUsService:JoinUsService,private _userService:UserService, private _storageService:LocalStorgeService) {
         this.user = new User();
     }
 
     joinUs() {
         this.errorMessage='';
         if(this.validate()){
-            console.log('valid');
+            this._userService.create(this.user).subscribe(data =>{
+                this.success=true;
+            }, error => this.errorMessage='An error occurred while creating your account. Please try again.');
         }
     }
 
     private validate():boolean {
         let user = this.user;
-        console.log(user);
         if (user === undefined) {
             this.errorMessage = 'Please fill up the required fields.';
             return false;
@@ -56,10 +60,20 @@ export class JoinUsComponent {
             this.errorMessage = 'Invalid last name.';
             return false;
         }
-        Observable.forkJoin(this._joinUsService.checkUserName(user.userName),this._joinUsService.checkEmail(user.email))
-            .subscribe(data => {
-                console.log(data);
-                return data[0] && data[1];
-            });
+        else if(user.userName.length >=6 && user.email){
+            Observable.forkJoin(this._joinUsService.checkUserName(user.userName),this._joinUsService.checkEmail(user.email))
+                .subscribe(data => {
+                    console.log("username : "+data[0] +" email: "+data[1]);
+                    if(data[0]){
+                        this.errorMessage='This username already exists. Please choose another one.'
+                    }else if(data[1]){
+                        this.errorMessage='This email already exists. Please choose another one.'
+                    }
+                    console.log("is valid: {}",!data[0] && !data[1]);
+                    return (!data[0] && !data[1]);
+                });
+        }
+
+        return true;
     }
 }
