@@ -13,6 +13,7 @@ var login_service_1 = require("./login.service");
 var Login_1 = require("../entity/Login");
 var login_service_2 = require('../login/login.service');
 var router_1 = require("angular2/router");
+var joinus_component_1 = require("../joinus/joinus.component");
 var LoginComponent = (function () {
     function LoginComponent(_loginService, _router) {
         this._loginService = _loginService;
@@ -37,7 +38,7 @@ var LoginComponent = (function () {
     LoginComponent = __decorate([
         core_1.Component({
             templateUrl: './app/login/login.component.html',
-            directives: [router_1.ROUTER_DIRECTIVES]
+            directives: [router_1.ROUTER_DIRECTIVES, joinus_component_1.JoinUsComponent]
         }), 
         __metadata('design:paramtypes', [login_service_1.LoginService, router_1.Router])
     ], LoginComponent);

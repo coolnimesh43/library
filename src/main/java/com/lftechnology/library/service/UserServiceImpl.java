@@ -3,7 +3,7 @@ package com.lftechnology.library.service;
 
 import java.util.List;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -14,7 +14,7 @@ import com.lftechnology.library.dao.UserDAO;
 import com.lftechnology.library.model.User;
 
 @Transactional
-@Singleton
+@Stateless
 public class UserServiceImpl implements UserDAO {
 
     @Inject
@@ -88,7 +88,32 @@ public class UserServiceImpl implements UserDAO {
             return updatedUser;
         }
         catch (Exception e) {
-            logger.debug("Inside VideoServieImpl while updating user. Exception is: {}", e);
+            logger.error("Inside VideoServieImpl while updating user. Exception is: {}", e);
+            return null;
+        }
+    }
+
+    @Override
+    public User findByUserName(String userName) {
+        logger.debug("Inside UserServiceImpl#findByUserName method. User name is: {}", userName);
+        try {
+            return (User) this.entityManager.createQuery("Select u from User u where u.userName =?1").setParameter(
+                1, userName).getSingleResult();
+        }
+        catch (Exception e) {
+            logger.error("Inside UserServiceImpl#findByUserName method. Exception is:{}", e);
+            return null;
+        }
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        logger.debug("Inside UserServiceImpl#findByEmail method. User name is: {}", email);
+        try {
+            return (User) this.entityManager.createQuery("Select u from User u where u.email =?1").setParameter(1, email).getSingleResult();
+        }
+        catch (Exception e) {
+            logger.error("Inside UserServiceImpl#findByEmailethod. Exception is:{}", e);
             return null;
         }
     }

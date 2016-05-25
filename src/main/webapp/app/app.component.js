@@ -29,6 +29,7 @@ var token_service_1 = require("./service/token.service");
 var user_component_1 = require("./user/user.component");
 var user_service_1 = require("./user/user.service");
 var album_service_1 = require("./album/album.service");
+var joinus_component_1 = require("./joinus/joinus.component");
 var AppComponent = (function () {
     function AppComponent(_router) {
         this._router = _router;
@@ -47,6 +48,7 @@ var AppComponent = (function () {
             { path: '/video', name: "Video", component: video_add_component_1.VideoAddComponent },
             { path: '/login', name: "Login", component: login_component_1.LoginComponent, useAsDefault: true },
             { path: '/user', name: "User", component: user_component_1.UserComponent },
+            { path: '/join', name: "JoinUs", component: joinus_component_1.JoinUsComponent }
         ]), 
         __metadata('design:paramtypes', [router_1.Router])
     ], AppComponent);

@@ -13,9 +13,10 @@ export class AuthRouterOutlet extends RouterOutlet {
         super(_elementRef, _loader, _parentRouter, nameAttr);
         this.parentRouter = _parentRouter;
         this.publicRoutes = {
-            '/login': true,
-            '/about': true,
-            '/home':true
+            'login': true,
+            'about': true,
+            'home':true,
+            'join':true
         };
     }
 
@@ -23,6 +24,8 @@ export class AuthRouterOutlet extends RouterOutlet {
         var url = instruction.urlPath;
         if (!this.publicRoutes[url] && !isLoggedIn()) {
             this.parentRouter.navigate(['Login']);
+        }else if((url==='login' || url==='join') && isLoggedIn()){
+            this.parentRouter.navigate(['Welcome']);
         }
         return super.activate(instruction);
     }

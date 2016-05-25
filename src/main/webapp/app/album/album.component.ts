@@ -29,7 +29,7 @@ export class AlbumComponent implements OnInit,AfterViewInit{
     }
 
     selectAlbum(album:Album):void{
-        $('#album').collapse('hide');
+        (<any>$('#album')).collapse('hide');
         if(album!==undefined){
             this.selectedAlbum=album;
             this.fireEvent(album);

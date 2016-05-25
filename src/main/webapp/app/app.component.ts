@@ -19,7 +19,7 @@ import {TokenService} from "./service/token.service";
 import {UserComponent} from "./user/user.component";
 import {UserService} from "./user/user.service";
 import {AlbumService} from "./album/album.service";
-import {AlbumAddComponent} from "./album/album-add.component";
+import {JoinUsComponent} from "./joinus/joinus.component";
 @Component({
     selector: 'my-app',
     templateUrl: './app/app.component.html',
@@ -33,6 +33,7 @@ import {AlbumAddComponent} from "./album/album-add.component";
     {path: '/video', name: "Video", component: VideoAddComponent},
     {path: '/login', name: "Login", component: LoginComponent, useAsDefault: true},
     {path:'/user',name:"User",component:UserComponent},
+    {path:'/join',name:"JoinUs",component:JoinUsComponent}
 ])
 export class AppComponent {
     constructor(private _router:Router) {

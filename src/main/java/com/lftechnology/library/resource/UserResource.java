@@ -91,4 +91,29 @@ public class UserResource {
         }
     }
 
+    @POST
+    @Path("user-name")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkUserName(String userName) {
+        logger.debug("Inside UserResource#checkUserName method. User name is: {}", userName);
+        User user = this.userDAO.findByUserName(userName);
+        if (user != null) {
+            return Response.ok(Boolean.TRUE).build();
+        }
+        return Response.ok(Boolean.FALSE).build();
+    }
+
+    @POST
+    @Path("email")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkEmail(String email) {
+        logger.debug("Inside UserResource#checkEmail method. User name is: {}", email);
+        User user = this.userDAO.findByEmail(email);
+        if (user != null) {
+            return Response.ok(Boolean.TRUE).build();
+        }
+        return Response.ok(Boolean.FALSE).build();
+    }
 }

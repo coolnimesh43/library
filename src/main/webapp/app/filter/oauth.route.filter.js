@@ -25,15 +25,19 @@ var AuthRouterOutlet = (function (_super) {
         _super.call(this, _elementRef, _loader, _parentRouter, nameAttr);
         this.parentRouter = _parentRouter;
         this.publicRoutes = {
-            '/login': true,
-            '/about': true,
-            '/home': true
+            'login': true,
+            'about': true,
+            'home': true,
+            'join': true
         };
     }
     AuthRouterOutlet.prototype.activate = function (instruction) {
         var url = instruction.urlPath;
         if (!this.publicRoutes[url] && !login_service_1.isLoggedIn()) {
             this.parentRouter.navigate(['Login']);
+        }
+        else if ((url === 'login' || url === 'join') && login_service_1.isLoggedIn()) {
+            this.parentRouter.navigate(['Welcome']);
         }
         return _super.prototype.activate.call(this, instruction);
     };

@@ -28,7 +28,7 @@ var LogoutComponent = (function () {
     };
     LogoutComponent = __decorate([
         core_1.Component({
-            template: "<ul class=\"nav navbar-collapse pull-right\" *ngIf=\"getLoggedIn\">\n                <li class=\"pull-right\">\n                    <a href=\"#\" title=\"Join Us\" (click)=\"logout()\"><strong>Logout</strong></a>\n                </li>\n            </ul>",
+            template: "<ul class=\"nav navbar-collapse pull-right\" *ngIf=\"getLoggedIn\">\n                <li class=\"pull-right\">\n                    <a href=\"#\" title=\"Logout\" (click)=\"logout()\"><strong>Logout</strong></a>\n                </li>\n            </ul>",
             selector: 'logout'
         }), 
         __metadata('design:paramtypes', [login_service_1.LoginService, router_1.Router])

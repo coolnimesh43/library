@@ -197,3 +197,32 @@ td{
 .selected{
     background-color: #CCCCCC !important;
 }
+.members,.members li{
+    color:#Ffffff !important;
+}
+.members li:hover{
+    background-color: inherit;
+}
+.ng-valid[required] {
+    border-left: 5px solid #42A948 !important; /* green */
+}
+
+.ng-invalid {
+    border-left: 5px solid #a94442 !important; /* red */
+}
+
+form label{
+    color:black;
+}
+
+.form-signin label{
+    float: left;
+    width: 30%;
+    text-align: right;
+    padding-right: 10px;
+    margin: 5px 0px 5px 0px;
+}
+.form-signin input{
+    width: 70%;
+    margin: 0px;
+}

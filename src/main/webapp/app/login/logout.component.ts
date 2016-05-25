@@ -7,12 +7,12 @@ import {TokenService} from "../service/token.service";
 @Component({
     template:`<ul class="nav navbar-collapse pull-right" *ngIf="getLoggedIn">
                 <li class="pull-right">
-                    <a href="#" title="Join Us" (click)="logout()"><strong>Logout</strong></a>
+                    <a href="#" title="Logout" (click)="logout()"><strong>Logout</strong></a>
                 </li>
             </ul>`,
     selector:'logout'
 })
-export class LogoutComponent{ss
+export class LogoutComponent{
     constructor(private _loginService:LoginService, private _router:Router){}
 
     get getLoggedIn():boolean {
