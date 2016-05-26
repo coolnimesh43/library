@@ -67,6 +67,7 @@ export class VideoAddComponent implements OnInit {
         } else {
             this.errorMessage = "Please enter all the required data.";
         }
+
     }
 
     public closeAddAlbumDialog(data) {
@@ -74,7 +75,6 @@ export class VideoAddComponent implements OnInit {
             this.successMessage = 'Album added successfully.';
             let user:User = getLoggedInUser();
             this._userService.getUser(user.id).subscribe(data => this.albums = data.albums, error => this.errorMessage = <any> error);
-            Script.hideAlert();
         }
         else {
             this.errorMessage = 'An error occurred while adding new album. Please try again.';

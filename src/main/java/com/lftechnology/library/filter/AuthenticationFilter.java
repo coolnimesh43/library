@@ -61,7 +61,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 String userEncodedString = payload.get(WebTokenUtils.SUB).toString();
                 String userString = new String(Base64.decodeBase64(userEncodedString));
                 User user = ObjectMapperFactory.objectMapper().readValue(userString, User.class);
-                logger.debug("user is: {}", user);
                 userAuthenticationEvent.fire(user);
             }
             else {

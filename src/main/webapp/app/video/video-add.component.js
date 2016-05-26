@@ -74,7 +74,6 @@ var VideoAddComponent = (function () {
             this.successMessage = 'Album added successfully.';
             var user = login_service_1.getLoggedInUser();
             this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
-            script_1.Script.hideAlert();
         }
         else {
             this.errorMessage = 'An error occurred while adding new album. Please try again.';

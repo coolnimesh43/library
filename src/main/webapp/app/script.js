@@ -14,11 +14,12 @@ var Script = (function () {
     function Script() {
     }
     Script.hideAlert = function () {
-        window.setTimeout(function () {
-            $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
-                $(this).remove();
-            });
-        }, 2000);
+        $(".alert").fadeTo(1000, 0).slideUp(1000, function () {
+            $(this).hide();
+        });
+    };
+    Script.showAlert = function () {
+        $(".alert").show();
     };
     Script = __decorate([
         core_1.Directive(), 
