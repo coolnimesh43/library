@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-///<reference path="../../typings/jquery/jquery.d.ts" />
 var core_1 = require("angular2/core");
 var router_1 = require("angular2/router");
 var Video_1 = require("../entity/Video");
@@ -18,6 +17,7 @@ var login_service_1 = require("../login/login.service");
 var album_service_1 = require("../album/album.service");
 var album_add_component_1 = require("../album/album-add.component");
 var user_service_1 = require("../user/user.service");
+var script_1 = require("../script");
 var VideoAddComponent = (function () {
     function VideoAddComponent(_albumService, _youtubeVideoService, _userService) {
         this._albumService = _albumService;
@@ -52,7 +52,10 @@ var VideoAddComponent = (function () {
                     _this.video.statistics.likeCount = stats.likeCount;
                     _this.video.statistics.dislikeCount = stats.dislikeCount;
                     _this.video.statistics.viewCount = stats.viewCount;
-                    _this._albumService.addVideo(_this.album.id, _this.video).subscribe(function (album) { _this.successMessage = "Video added successfully."; }, function (error) { return _this.errorMessage = error; });
+                    _this._albumService.addVideo(_this.album.id, _this.video)
+                        .subscribe(function (album) {
+                        _this.successMessage = "Video added successfully.";
+                    }, function (error) { return _this.errorMessage = error; });
                 }
             }, function (error) {
                 _this.errorMessage = error.toString;
@@ -68,6 +71,7 @@ var VideoAddComponent = (function () {
             this.successMessage = 'Album added successfully.';
             var user = login_service_1.getLoggedInUser();
             this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
+            script_1.Script.hideAlert();
         }
         else {
             this.errorMessage = 'An error occurred while adding new album. Please try again.';
@@ -113,7 +117,7 @@ var VideoAddComponent = (function () {
     VideoAddComponent = __decorate([
         core_1.Component({
             templateUrl: './app/video/video-add.component.html',
-            directives: [router_1.ROUTER_DIRECTIVES, album_add_component_1.AlbumAddComponent]
+            directives: [router_1.ROUTER_DIRECTIVES, album_add_component_1.AlbumAddComponent, script_1.Script]
         }), 
         __metadata('design:paramtypes', [album_service_1.AlbumService, YoutubeVideoService_1.YoutubeVideoService, user_service_1.UserService])
     ], VideoAddComponent);

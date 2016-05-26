@@ -58,6 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (user == null) {
             throw new InvalidUserNameOrPasswordException();
         }
+        user.setAlbums(null);
         Token token = this.generateToken(user);
         user.setLastLoggedInDate(LocalDateTime.now());
         this.userDao.save(user);

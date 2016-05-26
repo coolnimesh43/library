@@ -1,4 +1,3 @@
-///<reference path="../../typings/jquery/jquery.d.ts" />
 import {Component, OnInit} from "angular2/core";
 import {ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Video} from "../entity/Video";
@@ -11,11 +10,12 @@ import {Album} from "../entity/Album";
 import {AlbumAddComponent} from "../album/album-add.component";
 import {UserService} from "../user/user.service";
 import {User} from "../entity/User";
+import {Script} from "../script";
 @Component({
     templateUrl: './app/video/video-add.component.html',
-    directives: [ROUTER_DIRECTIVES,AlbumAddComponent]
+    directives: [ROUTER_DIRECTIVES, AlbumAddComponent, Script]
 })
-export class VideoAddComponent implements OnInit{
+export class VideoAddComponent implements OnInit {
     private youtubeEmbedUrl:string = "https://www.youtube.com/embed/";
     video:Video;
     album:Album;
@@ -23,18 +23,19 @@ export class VideoAddComponent implements OnInit{
     errorMessage:string;
     successMessage:string;
 
-    constructor(private _albumService:AlbumService, private _youtubeVideoService:YoutubeVideoService,private _userService:UserService) {
+    constructor(private _albumService:AlbumService, private _youtubeVideoService:YoutubeVideoService, private _userService:UserService) {
         this.video = new Video();
     }
 
-    ngOnInit():void{
-        let user:User=getLoggedInUser();
-        this._userService.getUser(user.id).subscribe(data => this.albums=data.albums, error => this.errorMessage=<any> error);
+    ngOnInit():void {
+        let user:User = getLoggedInUser();
+        this._userService.getUser(user.id).subscribe(data => this.albums = data.albums, error => this.errorMessage = <any> error);
     }
 
-    selectAlbum(album:Album):void{
-        this.album=album;
+    selectAlbum(album:Album):void {
+        this.album = album;
     }
+
     add():void {
         if (this.validateVideo()) {
             this.extractVideoContent();
@@ -52,32 +53,37 @@ export class VideoAddComponent implements OnInit{
                     this.video.statistics.likeCount = stats.likeCount;
                     this.video.statistics.dislikeCount = stats.dislikeCount;
                     this.video.statistics.viewCount = stats.viewCount;
-                   this._albumService.addVideo(this.album.id,this.video).subscribe(album => {this.successMessage="Video added successfully."}, error => this.errorMessage=<any>error);
+                    this._albumService.addVideo(this.album.id, this.video)
+                        .subscribe(album => {
+                                this.successMessage = "Video added successfully.";
+                            }, error => this.errorMessage = <any>error);
                 }
 
             }, error => {
                 this.errorMessage = error.toString;
-             });
-        }else{
-            this.errorMessage="Please enter all the required data.";
+            });
+        } else {
+            this.errorMessage = "Please enter all the required data.";
         }
     }
 
-    public closeAddAlbumDialog(data){
-        if(data==='ok'){
-            this.successMessage='Album added successfully.';
-            let user:User=getLoggedInUser();
-            this._userService.getUser(user.id).subscribe(data => this.albums=data.albums, error => this.errorMessage=<any> error);
+    public closeAddAlbumDialog(data) {
+        if (data === 'ok') {
+            this.successMessage = 'Album added successfully.';
+            let user:User = getLoggedInUser();
+            this._userService.getUser(user.id).subscribe(data => this.albums = data.albums, error => this.errorMessage = <any> error);
+            Script.hideAlert();
         }
-        else{
-            this.errorMessage='An error occurred while adding new album. Please try again.';
+        else {
+            this.errorMessage = 'An error occurred while adding new album. Please try again.';
         }
     }
+
     private validateVideo():boolean {
         let isValid:boolean = true;
         isValid = isValid && this.video !== undefined;
         isValid = isValid && this.video.url !== undefined;
-        isValid=isValid && this.album!==undefined;
+        isValid = isValid && this.album !== undefined;
         return isValid;
     }
 
@@ -113,4 +119,5 @@ export class VideoAddComponent implements OnInit{
             this.video.url = this.youtubeEmbedUrl + this.video.videoId;
         }
     }
+
 }
