@@ -9,7 +9,7 @@ import {User} from "../entity/User";
     selector:'album',
     templateUrl:'./app/album/album.component.html'
 })
-export class AlbumComponent implements OnInit,AfterViewInit{
+export class AlbumComponent implements OnInit{
 
     public albums:Array<Album>;
     public errorMessage:string;
@@ -22,10 +22,6 @@ export class AlbumComponent implements OnInit,AfterViewInit{
     ngOnInit():void{
         let user:User=getLoggedInUser();
         this._userService.getUser(user.id).subscribe(data => this.albums=data.albums, error => this.errorMessage=<any> error);
-    }
-
-    ngAfterViewInit():void{
-        
     }
 
     selectAlbum(album:Album):void{

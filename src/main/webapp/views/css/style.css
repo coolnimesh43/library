@@ -214,3 +214,11 @@ td{
 form label{
     color:black;
 }
+ul.dropdown-menu li {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0;
+}
+
+ul.dropdown-menu li:last-child {
+    border: none;
+}

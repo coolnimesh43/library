@@ -15,6 +15,7 @@ var YoutubeVideoService_1 = require("./YoutubeVideoService");
 var YoutubeResponse_1 = require("../entity/YoutubeResponse");
 var login_service_1 = require("../login/login.service");
 var album_service_1 = require("../album/album.service");
+var Album_1 = require("../entity/Album");
 var album_add_component_1 = require("../album/album-add.component");
 var user_service_1 = require("../user/user.service");
 var script_1 = require("../script");
@@ -54,6 +55,8 @@ var VideoAddComponent = (function () {
                     _this.video.statistics.viewCount = stats.viewCount;
                     _this._albumService.addVideo(_this.album.id, _this.video)
                         .subscribe(function (album) {
+                        _this.video = new Video_1.Video();
+                        _this.album = new Album_1.Album();
                         _this.successMessage = "Video added successfully.";
                     }, function (error) { return _this.errorMessage = error; });
                 }

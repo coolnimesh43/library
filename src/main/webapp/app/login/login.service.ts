@@ -33,13 +33,13 @@ export class LoginService {
 
     public logout():void {
         if (isLoggedIn()) {
+            let headers:Headers=this._httpClient.setHeader();
             let token:Token = localStorage.getItem(this.TOKEN);
             this._localStorageService.removeAllFromLocalStorage();
-            let headers:Headers=this._httpClient.setHeader();
             this._http.post(this.logOutUrl, JSON.stringify(token),{headers:headers})
-                .map((response:Response) => {console.log(response.json() +" text is "+response.text());return response.json();})
-                .do( data => console.log(data))
-                .catch(data => {console.log(data); return Observable.throw(data ||'error')})
+                .map((response:Response) => response.json())
+                .do()
+                .catch(data => Observable.throw(data ||'error'))
                 .subscribe();
         }
 

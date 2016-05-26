@@ -55,6 +55,8 @@ export class VideoAddComponent implements OnInit {
                     this.video.statistics.viewCount = stats.viewCount;
                     this._albumService.addVideo(this.album.id, this.video)
                         .subscribe(album => {
+                            this.video=new Video();
+                            this.album=new Album();
                                 this.successMessage = "Video added successfully.";
                             }, error => this.errorMessage = <any>error);
                 }

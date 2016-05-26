@@ -16,6 +16,10 @@ var LogoutComponent = (function () {
         this._loginService = _loginService;
         this._router = _router;
     }
+    LogoutComponent.prototype.ngOnInit = function () {
+        var user = login_service_1.getLoggedInUser();
+        this.loggedInUserName = user.firstName + ' ' + user.lastName;
+    };
     Object.defineProperty(LogoutComponent.prototype, "getLoggedIn", {
         get: function () {
             return login_service_1.isLoggedIn();
@@ -28,8 +32,9 @@ var LogoutComponent = (function () {
     };
     LogoutComponent = __decorate([
         core_1.Component({
-            template: "<ul class=\"nav navbar-collapse pull-right\" *ngIf=\"getLoggedIn\">\n                <li class=\"pull-right\">\n                    <a href=\"#\" title=\"Logout\" (click)=\"logout()\"><strong>Logout</strong></a>\n                </li>\n            </ul>",
-            selector: 'logout'
+            template: "<ul class=\"nav navbar-nav navbar-collapse pull-right\" *ngIf=\"getLoggedIn\">\n                <li class=\"pull-left\">\n                    <a [routerLink]=\"['User']\" title=\"{{loggedInUserName}}\">{{loggedInUserName}}</a> &nbsp;&nbsp;\n                </li>\n                <li class=\"pull-right\">\n                    <a href=\"#\" title=\"Logout\" (click)=\"logout()\"><strong>Logout</strong></a>\n                </li>\n            </ul>",
+            selector: 'logout',
+            directives: [router_1.ROUTER_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [login_service_1.LoginService, router_1.Router])
     ], LogoutComponent);

@@ -24,8 +24,6 @@ var AlbumComponent = (function () {
         var user = login_service_1.getLoggedInUser();
         this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
     };
-    AlbumComponent.prototype.ngAfterViewInit = function () {
-    };
     AlbumComponent.prototype.selectAlbum = function (album) {
         $('#album').collapse('hide');
         if (album !== undefined) {

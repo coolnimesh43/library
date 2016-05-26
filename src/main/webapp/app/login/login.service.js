@@ -36,13 +36,13 @@ var LoginService = (function () {
     };
     LoginService.prototype.logout = function () {
         if (isLoggedIn()) {
+            var headers = this._httpClient.setHeader();
             var token = localStorage.getItem(this.TOKEN);
             this._localStorageService.removeAllFromLocalStorage();
-            var headers = this._httpClient.setHeader();
             this._http.post(this.logOutUrl, JSON.stringify(token), { headers: headers })
-                .map(function (response) { console.log(response.json() + " text is " + response.text()); return response.json(); })
-                .do(function (data) { return console.log(data); })
-                .catch(function (data) { console.log(data); return Observable_1.Observable.throw(data || 'error'); })
+                .map(function (response) { return response.json(); })
+                .do()
+                .catch(function (data) { return Observable_1.Observable.throw(data || 'error'); })
                 .subscribe();
         }
     };
