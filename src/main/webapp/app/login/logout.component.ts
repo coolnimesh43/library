@@ -22,7 +22,9 @@ export class LogoutComponent implements OnInit{
     loggedInUserName:string;
     ngOnInit():void{
         let user:User=getLoggedInUser();
-        this.loggedInUserName=user.firstName+' '+user.lastName;
+        if(user!==undefined){
+            this.loggedInUserName=user.firstName+' '+user.lastName;
+        }
     }
     get getLoggedIn():boolean {
         return isLoggedIn();

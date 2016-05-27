@@ -18,7 +18,9 @@ var LogoutComponent = (function () {
     }
     LogoutComponent.prototype.ngOnInit = function () {
         var user = login_service_1.getLoggedInUser();
-        this.loggedInUserName = user.firstName + ' ' + user.lastName;
+        if (user !== undefined) {
+            this.loggedInUserName = user.firstName + ' ' + user.lastName;
+        }
     };
     Object.defineProperty(LogoutComponent.prototype, "getLoggedIn", {
         get: function () {

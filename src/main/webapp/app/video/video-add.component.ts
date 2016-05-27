@@ -37,6 +37,8 @@ export class VideoAddComponent implements OnInit {
     }
 
     add():void {
+        this.errorMessage='';
+        this.successMessage='';
         if (this.validateVideo()) {
             this.extractVideoContent();
             this._youtubeVideoService.getVideoContent(this.video.videoId).subscribe(response => {

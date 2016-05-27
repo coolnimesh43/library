@@ -37,6 +37,8 @@ var VideoAddComponent = (function () {
     };
     VideoAddComponent.prototype.add = function () {
         var _this = this;
+        this.errorMessage = '';
+        this.successMessage = '';
         if (this.validateVideo()) {
             this.extractVideoContent();
             this._youtubeVideoService.getVideoContent(this.video.videoId).subscribe(function (response) {

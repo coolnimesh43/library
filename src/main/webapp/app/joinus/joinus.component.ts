@@ -52,7 +52,6 @@ export class JoinUsComponent {
             return true;
         }
         else if (user.firstName === undefined || user.firstName.trim() === '' || !/^[a-zA-Z]+$/.test(user.firstName)) {
-            console.log(/^[a-zA-Z]$/.test(user.firstName));
             this.errorMessage = 'Invalid first name.';
             return false;
         }
@@ -63,13 +62,11 @@ export class JoinUsComponent {
         else if(user.userName.length >=6 && user.email){
             Observable.forkJoin(this._joinUsService.checkUserName(user.userName),this._joinUsService.checkEmail(user.email))
                 .subscribe(data => {
-                    console.log("username : "+data[0] +" email: "+data[1]);
                     if(data[0]){
                         this.errorMessage='This username already exists. Please choose another one.'
                     }else if(data[1]){
                         this.errorMessage='This email already exists. Please choose another one.'
                     }
-                    console.log("is valid: {}",!data[0] && !data[1]);
                     return (!data[0] && !data[1]);
                 });
         }
