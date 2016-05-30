@@ -22,7 +22,9 @@ var AlbumComponent = (function () {
     AlbumComponent.prototype.ngOnInit = function () {
         var _this = this;
         var user = login_service_1.getLoggedInUser();
-        this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
+        if (user !== undefined) {
+            this._userService.getUser(user.id).subscribe(function (data) { return _this.albums = data.albums; }, function (error) { return _this.errorMessage = error; });
+        }
     };
     AlbumComponent.prototype.selectAlbum = function (album) {
         $('#album').collapse('hide');

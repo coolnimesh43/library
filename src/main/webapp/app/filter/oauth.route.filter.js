@@ -26,8 +26,6 @@ var AuthRouterOutlet = (function (_super) {
         this.parentRouter = _parentRouter;
         this.publicRoutes = {
             'login': true,
-            'about': true,
-            'home': true,
             'join': true
         };
     }

@@ -18,7 +18,6 @@ var album_service_1 = require("../album/album.service");
 var Album_1 = require("../entity/Album");
 var album_add_component_1 = require("../album/album-add.component");
 var user_service_1 = require("../user/user.service");
-var script_1 = require("../script");
 var VideoAddComponent = (function () {
     function VideoAddComponent(_albumService, _youtubeVideoService, _userService) {
         this._albumService = _albumService;
@@ -121,7 +120,7 @@ var VideoAddComponent = (function () {
     VideoAddComponent = __decorate([
         core_1.Component({
             templateUrl: './app/video/video-add.component.html',
-            directives: [router_1.ROUTER_DIRECTIVES, album_add_component_1.AlbumAddComponent, script_1.Script]
+            directives: [router_1.ROUTER_DIRECTIVES, album_add_component_1.AlbumAddComponent]
         }), 
         __metadata('design:paramtypes', [album_service_1.AlbumService, YoutubeVideoService_1.YoutubeVideoService, user_service_1.UserService])
     ], VideoAddComponent);

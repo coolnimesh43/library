@@ -21,7 +21,9 @@ export class AlbumComponent implements OnInit{
 
     ngOnInit():void{
         let user:User=getLoggedInUser();
-        this._userService.getUser(user.id).subscribe(data => this.albums=data.albums, error => this.errorMessage=<any> error);
+        if(user!==undefined){
+            this._userService.getUser(user.id).subscribe(data => this.albums=data.albums, error => this.errorMessage=<any> error);
+        }
     }
 
     selectAlbum(album:Album):void{

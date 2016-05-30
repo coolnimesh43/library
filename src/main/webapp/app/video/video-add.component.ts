@@ -1,19 +1,17 @@
 import {Component, OnInit} from "angular2/core";
 import {ROUTER_DIRECTIVES, CanActivate} from "angular2/router";
 import {Video} from "../entity/Video";
-import {VideoService} from "./VideoService";
 import {YoutubeVideoService} from "./YoutubeVideoService";
 import {YoutubeResponse, Snippet, Item, Statistics} from "../entity/YoutubeResponse";
-import {isLoggedIn, getLoggedInUser} from "../login/login.service";
+import { getLoggedInUser} from "../login/login.service";
 import {AlbumService} from "../album/album.service";
 import {Album} from "../entity/Album";
 import {AlbumAddComponent} from "../album/album-add.component";
 import {UserService} from "../user/user.service";
 import {User} from "../entity/User";
-import {Script} from "../script";
 @Component({
     templateUrl: './app/video/video-add.component.html',
-    directives: [ROUTER_DIRECTIVES, AlbumAddComponent, Script]
+    directives: [ROUTER_DIRECTIVES, AlbumAddComponent]
 })
 export class VideoAddComponent implements OnInit {
     private youtubeEmbedUrl:string = "https://www.youtube.com/embed/";
